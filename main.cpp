@@ -3,9 +3,9 @@
 int main()
 {
 
-    // testMultipleGet();
+    testMultipleGet();
     // testHttpPostRequests();
-    testHttpPutRequests();
+    // testHttpPutRequests();
     // testMultipleHttpDelete();
     // testMultipleHttpHead();
     // testMultipleHttpPatch();
