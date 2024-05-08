@@ -1,16 +1,9 @@
 #include "./inc/Test.hpp"
 
-int main()
-{
-
-    // httpGet();
-    httpPost();
-    // httpPut();
-    // httpDelete();
-    // httpHead();
-    // httpPatch();
-    // httpOptions();
-    // httpConnect();
-
+int main(int argc, char **argv) {
+    (void) argc;
+    (void) argv;
+    serverMain(argc, argv);
+    // httpMain();
     return (0);
 }
