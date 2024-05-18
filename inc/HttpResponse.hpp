@@ -51,9 +51,6 @@ public:
     void printMethodMap();
     void setErrorPageHeaders(int status_code);
     int checkCustomErrorPage(int status_code);
-    // std::string response_log(LogLevel level);
-    // std::string getCurrentDateTime();
-    // void logError(const std::string& message);
 
     std::pair<std::string, double> extractLangAndQ(const std::string& langAndQ);
     std::string findBestLanguage(const std::vector<std::string>& matches, const std::vector<std::pair<std::string, double> >& langQPairs);
@@ -78,8 +75,11 @@ public:
 
     void HandleCgi();
     void setCgiPipe(CgiHandle &cgi);
-    int toCgi(CgiHandle &cgi, std::string &req_body);
-    int fromCgi(CgiHandle &cgi);
+    void toCgi(CgiHandle &cgi, std::string &req_body);
+    void fromCgi(CgiHandle &cgi);
+    void handleCgiHeaders(std::string &body);
+    void parseCgiHeaders();
+    void closeParentCgiPipe(CgiHandle &cgi);
 
 
 
@@ -100,8 +100,11 @@ private:
     std::string charset_;
     std::map<std::string, HttpResponse::type> methods_;
     std::pair<std::string, int> findLocation(std::string target);
-    std::map<std::string, std::string> headers_;   
+    std::map<std::string, std::string> headers_;
 
+    std::string cgiHeaders_;
+    bool cgiHeadersParsed_;
+    bool cgiRead;
     std::string buildMethodList();
     bool checkAuth();
 };

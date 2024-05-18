@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AllHeaders.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: drey <drey@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:47:30 by nikitos           #+#    #+#             */
-/*   Updated: 2024/04/29 01:39:17 by alappas          ###   ########.fr       */
+/*   Updated: 2024/05/12 17:54:01 by drey             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,7 @@
 #include "HttpStatusCode.hpp"
 #include "RequestConfig.hpp"
 #include "utils.hpp"
-#include "ServerConfig.hpp"
 #include "Client.hpp"
-#include "InputArgs.hpp"
 #include "ErrorCodes.hpp"
 
 
@@ -105,7 +103,7 @@ std::string getValue(const std::map<std::string, std::vector<std::string> > &key
 void printAllDBData(GroupedDBMap db);
 void printData(const std::vector<KeyMapValue> &values);
 std::vector<KeyMapValue> getDataByIdx(GroupedDBMap db, int index);
-bool checkModifier(std::string &str);
+bool setModifier(std::string &str);
 const std::string b64decode(const void *data, const size_t &len);
 std::string b64decode(const std::string &str64);
 std::string ftos(size_t num);

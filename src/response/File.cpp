@@ -37,13 +37,6 @@ void File::parseExt()
 
         if (mime_ext_.length() > 15)
             mime_ext_ = mime_ext_.substr(0, 15);
-
-        // Check for non-alphanumeric characters and replace them with "_"
-        // for (std::string::iterator it = mime_ext_.begin(); it != mime_ext_.end(); ++it)
-        // {
-        //     if (!isalnum(*it))
-        //         *it = '_';
-        // }
     }
 
     // Extract the file name without extension
@@ -94,7 +87,7 @@ void File::parseExtNegotiation()
                      : file;
 }
 
-void File::createFile(std::string &body)
+void File::createFile(const std::string &body)
 {
     ssize_t bytes_written = write(fd_, body.c_str(), body.length());
     if (bytes_written <= 0)
@@ -148,9 +141,48 @@ void File::closeFile()
 
 void File::appendFile(const std::string &body)
 {
-    int flags = O_CREAT | O_WRONLY | O_APPEND;
-    fd_ = open(path_.c_str(), flags, 0644);
+    int flags = O_CREAT | O_WRONLY | O_TRUNC;
+    std::string dirPath = "www";
+    std::string newPath = dirPath + "/" + path_;
+    if (!exists(dirPath))
+    {
+        if (mkdir(dirPath.c_str(), 0755) != 0)
+        {
+            std::cerr << "Error creating directory: " << strerror(errno) << std::endl;
+            return;
+        }
+    }
+    fd_ = open(newPath.c_str(), flags, 0644);
+    if (fd_ < 0)
+    {
+        std::cerr << "Error opening file for append: " << strerror(errno) << std::endl;
+        return;
+    }
 
+    ssize_t bytes_written = write(fd_, body.c_str(), body.length());
+    if (bytes_written <= 0)
+    {
+        std::cerr << "Error appending to file: " << strerror(errno) << std::endl;
+    }
+
+    closeFile();
+}
+
+void File::appendFile(const std::string &body,std::string ext)
+{
+    int flags = O_CREAT | O_WRONLY | O_TRUNC;
+    std::string dirPath = "www";
+    std::string newPath = dirPath + "/serverDB/" + path_ + ext;
+
+    if (!exists(dirPath))
+    {
+        if (mkdir(dirPath.c_str(), 0755) != 0)
+        {
+            std::cerr << "Error creating directory: " << strerror(errno) << std::endl;
+            return;
+        }
+    }
+    fd_ = open(newPath.c_str(), flags, 0644);
     if (fd_ < 0)
     {
         std::cerr << "Error opening file for append: " << strerror(errno) << std::endl;
@@ -201,7 +233,6 @@ bool File::exists(const std::string &path)
 bool File::is_directory()
 {
     struct stat statbuf;
-
     if (!checkFileExists(path_))
         return false;
 
@@ -244,25 +275,21 @@ std::string File::listDir(std::string &target)
     std::string body;
     std::vector<directory_listing> listing = getDirListings(path_);
 
-    body += genHtmlHeader("Index of " + target);
-    body += "<h1>Index of " + target + "</h1><hr><pre>";
-    body += "<div style=\"display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; padding: 0px 20px; font-size: 1rem; font-weight:bold;\">";
-    body += "<span>Directory</span>";
-    body += "<span>Date</span>";
-    body += "<span>Size</span>";
-    body += "</div><hr>\r\n";
+    body.append(genHtmlHeader("Index of " + target));
+    body.append("<h1>Index of " + target + "</h1><hr><pre>");
+    body.append("<div style=\"display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; padding: 0px 20px; font-size: 1rem; font-weight:bold;\">");
+    body.append("<span>Directory</span>");
+    body.append("<span>Date</span>");
+    body.append("<span>Size</span>");
+    body.append("</div><hr>\r\n");
 
     for (size_t i = 0; i < listing.size(); ++i)
     {
-        // std::cout << "Listing: " << listing[i].name_ << std::endl;
-        // std::cout << "Is dir: " << listing[i].is_dir_ << std::endl;
-        // std::cout << "target: " << target << std::endl;
-
-        body += formatListing(listing[i], target);
+        body.append(formatListing(listing[i], target));
     }
 
-    body += "</pre><hr>";
-    body += genHtmlFooter();
+    body.append("</pre><hr>");
+    body.append(genHtmlFooter());
 
     return body;
 }
@@ -272,11 +299,11 @@ std::string File::formatListing(const directory_listing &listing, const std::str
     std::string formatted;
 
     std::string link = removeDupSlashes(basePath + "/" + listing.name_);
-    formatted += "<div style=\"display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; padding: 0px 20px;\">";
-    formatted += "<a style=\"font-weight:bold;\" href=\"" + link + "\">" + listing.name_ + "</a>";
-    formatted += "<span>" + listing.date_ + "</span>";
-    formatted += "<span>" + (listing.is_dir_ ? "-" : ftos(listing.size_)) + "</span>";
-    formatted += "</div>\r\n";
+    formatted.append("<div style=\"display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; padding: 0px 20px;\">");
+    formatted.append("<a style=\"font-weight:bold;\" href=\"" + link + "\">" + listing.name_ + "</a>");
+    formatted.append("<span>" + listing.date_ + "</span>");
+    formatted.append("<span>" + (listing.is_dir_ ? "-" : ftos(listing.size_)) + "</span>");
+    formatted.append("</div>\r\n");
 
     return formatted;
 }
@@ -301,8 +328,6 @@ std::vector<directory_listing> File::getDirListings(const std::string &dirPath)
     while ((entry = readdir(dir)) != NULL)
     {
         std::string fileName = entry->d_name;
-        // if (fileName == "." || fileName == "..")
-        //     continue; // Skip current and parent directories
 
         directory_listing listing = createListing(fileName, dirPath);
         listings.push_back(listing);
@@ -340,22 +365,24 @@ directory_listing File::createListing(const std::string &fileName, const std::st
 std::string File::genHtmlHeader(const std::string &title)
 {
     std::string header;
-    header += "<!DOCTYPE html>\r\n";
-    header += "<html>\r\n";
-    header += "<head>\r\n";
-    header += "<meta charset=\"UTF-8\">\r\n";
-    header += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n";
-    header += "<title>" + title + "</title>\r\n";
-    header += "</head>\r\n";
-    header += "<body>\r\n";
+
+    header.append("<!DOCTYPE html>\r\n");
+    header.append("<html>\r\n");
+    header.append("<head>\r\n");
+    header.append("<meta charset=\"UTF-8\">\r\n");
+    header.append("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n");
+    header.append("<title>" + title + "</title>\r\n");
+    header.append("</head>\r\n");
+    header.append("<body>\r\n");
+
     return header;
 }
 
 std::string File::genHtmlFooter()
 {
     std::string footer;
-    footer += "</body>\r\n";
-    footer += "</html>\r\n";
+    footer.append("</body>\r\n");
+    footer.append("</html>\r\n");
     return footer;
 }
 
@@ -428,12 +455,9 @@ void File::findMatchingFiles()
     dir = opendir(path.c_str());
     if (dir)
     {
-        /// @note: Debugging purposes
         while ((ent = readdir(dir)))
         {
             std::string name(ent->d_name);
-            /// @note Debugging purposes
-            // std::cout << "Name: " << name << std::endl;
             if (name == file_name_full_)
                 matches_.push_back(name);
             else if (name.find(file_name_) != std::string::npos &&
@@ -467,17 +491,14 @@ std::string File::getContent()
     std::streamsize fileSize = fileStream.tellg();
     fileStream.seekg(0, std::ios::beg);
 
-    // Create a buffer to hold the entire file contents
     std::vector<char> buffer(fileSize);
 
-    // Read the entire file into the buffer
+  
     if (!fileStream.read(buffer.data(), fileSize))
     {
-        std::cerr << "Error reading file: " << path_ << std::endl;
+        std::cerr << "Error reading file into buffer: " << path_ << std::endl;
         return "";
     }
-
-    // Construct a string from the buffer
     std::string content(buffer.begin(), buffer.end());
 
     return content;

@@ -31,10 +31,11 @@ public:
   const VecStr &filterDataByDirectives(const std::vector<KeyMapValue> &values, std::string directive, std::string location);
   const VecStr &cascadeFilter(std::string directive, std::string location);
   const VecStr &checkRootDB(std::string directive);
-  LocationModifier checkModifier(const std::string &modifiers);
+  LocationModifier setModifier(const std::string &modifiers);
   bool isMethodAccepted(std::string &method);
   void redirectLocation(std::string target);
   std::string locationExtractor(const std::string &locationStr);
+  std::string findLongestMatch();
 
   void setUp(size_t targetServerIdx);
   void setTarget(const std::string &target);
@@ -69,20 +70,23 @@ public:
   std::map<int, std::string> &getRedirectionMap();
   std::vector<std::string> &getMethods();
   std::string &getMethod();
-  std::string &getBody();
+  const std::string &getBody() const;
   std::map<std::string, std::string> getHeaders();
   std::string &getHeader(std::string key);
   std::string &getProtocol();
   size_t getContentLength();
   std::string &getAuth();
   std::string &getUpload();
-  std::map<std::string, std::string> &getCgi();
+  std::vector<std::string> &getCgi();
   std::string &getCgiBin();
   std::map<std::string, int> &getLocationsMap();
   RequestConfig *getRequestLocation(std::string request_target);
   bool directiveExists(std::string directive, std::string location);
   void returnRedirection();
   void setBestMatch(std::string &newTarget);
+  void setLociMatched(int val);
+  int getLociMatched();
+  void setTargetSensitivity();
 
   void setMap(const VecStr &vec, std::map<int, std::string> &resultMap, std::string &codes);
   void assignCodes(const std::string &codes, const std::string &page, std::map<int, std::string> &resultMap);
@@ -95,7 +99,7 @@ private:
   Client &client_;
   Listen &host_port_;
   DB &db_;
-  // LocationModifier modifierType_;
+  LocationModifier modifierType_;
   std::string target_;
   std::string root_;
   std::string uri_;
@@ -108,9 +112,10 @@ private:
   size_t serverId;
   std::string auth_;
   std::string upload_;
-  std::map<std::string, std::string> cgi_;
+  std::vector<std::string> cgi_;
   std::string cgi_bin_;
   std::map<std::string, int> locationsMap_;
+  int isLociMatched_;
 };
 
 #endif
