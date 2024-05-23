@@ -2,6 +2,7 @@
 
 import os
 import cgi
+import shutil
 
 # Create instance of FieldStorage
 form = cgi.FieldStorage()
@@ -18,12 +19,14 @@ else:
     # Delete the directory if it exists
     directory_path = os.path.join(base_directory, directory_to_delete)
     if os.path.exists(directory_path):
-        # Delete the entire directory and its contents
-        import shutil
-        shutil.rmtree(directory_path)
-        message = f'The directory "{directory_to_delete}" has been successfully deleted.'
+        if os.path.isfile(directory_path):
+            os.remove(directory_path)
+            message = f'The file "{directory_to_delete}" has been successfully deleted.'
+        elif os.path.isdir(directory_path):
+            shutil.rmtree(directory_path)
+            message = f'The directory "{directory_to_delete}" has been successfully deleted.'
     else:
-        message = f'Directory "{directory_to_delete}" does not exist or could not be deleted.'
+        message = f'"{directory_to_delete}" does not exist or could not be deleted.'
 
 # Output the result
 print("Content-Type: text/html;charset=utf-8\r\n")

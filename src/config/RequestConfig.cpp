@@ -663,7 +663,14 @@ bool RequestConfig::isMethodAccepted(std::string &method)
     if (!methodFlag)
         return true;
 
-    return (allowed_methods_[0] == "none" || method.empty()) ? false : (std::find(allowed_methods_.begin(), allowed_methods_.end(), method) != allowed_methods_.end());
+    if (allowed_methods_.empty())
+    {
+        allowed_methods_.push_back("GET");
+        allowed_methods_.push_back("POST");
+        allowed_methods_.push_back("DELETE");
+    }
+        
+    return (method.empty()) ? false : (std::find(allowed_methods_.begin(), allowed_methods_.end(), method) != allowed_methods_.end());
 }
 
 void RequestConfig::printConfigSetUp()
