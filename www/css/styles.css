@@ -75,6 +75,7 @@ img {
   vertical-align: middle;
 }
 
+
 /* table {
   caption-side: bottom;
   border-collapse: collapse;
@@ -565,6 +566,23 @@ textarea.form-control-lg {
   --bs-btn-disabled-border-color: #212529;
 }
 
+.btn-light {
+  --bs-btn-color: #212529;
+  --bs-btn-bg: #fff;
+  --bs-btn-border-color: #fff;
+  --bs-btn-hover-color: #212529;
+  --bs-btn-hover-bg: #424649;
+  --bs-btn-hover-border-color: #373b3e;
+  --bs-btn-focus-shadow-rgb: 66, 70, 73;
+  --bs-btn-active-color: #424649;
+  --bs-btn-active-bg: #4d5154;
+  --bs-btn-active-border-color: #373b3e;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #212529;
+  --bs-btn-disabled-border-color: #212529;
+}
+
 
 .btn-lg, .btn-group-lg > .btn {
   --bs-btn-padding-y: 0.5rem;
@@ -826,7 +844,8 @@ html {
   height: auto;
   padding-top: 8rem;
   padding-bottom: 8rem;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("../assets/img/bg-masthead.jpg");
+  /* background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 1) 100%), url("../assets/img/bg-masthead.jpg"); */
+  background-image: url("../assets/img/bg-masthead.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -835,6 +854,7 @@ html {
   font-size: 4rem;
   margin: 0;
   padding: 0;
+  color: var(--bs-green);
 }
 @media (min-width: 992px) {
   .masthead {
