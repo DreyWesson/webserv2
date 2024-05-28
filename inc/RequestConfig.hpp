@@ -58,7 +58,6 @@ public:
   void setAuth(const VecStr &auths);
   void setUpload(const VecStr &upload);
   void setCgi(const VecStr &cgi);
-  void setCgiBin(const VecStr &cgiBin);
   void setLocationsMap(const std::vector<KeyMapValue> &values);
   void setRedirectMap(const VecStr &redirects);
   void setRedirCode(int code);
@@ -90,7 +89,6 @@ public:
   std::string &getAuth();
   std::string &getUpload();
   std::vector<std::string> &getCgi();
-  std::string &getCgiBin();
   std::map<std::string, int> &getLocationsMap();
   RequestConfig *getRequestLocation(std::string request_target);
   bool directiveExists(std::string directive, std::string location);
@@ -132,7 +130,6 @@ private:
   std::string auth_;
   std::string upload_;
   std::vector<std::string> cgi_;
-  std::string cgi_bin_;
   std::map<std::string, int> locationsMap_;
   int isLociMatched_;
   std::string uri_suffix_;

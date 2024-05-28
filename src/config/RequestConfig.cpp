@@ -20,7 +20,7 @@ RequestConfig::RequestConfig(const RequestConfig &rhs)
       client_max_body_size_(rhs.client_max_body_size_), autoindex_(rhs.autoindex_),
       indexes_(rhs.indexes_), error_codes_(rhs.error_codes_), redirectMap_(rhs.redirectMap_),
       allowed_methods_(rhs.allowed_methods_), serverId(rhs.serverId), auth_(rhs.auth_),
-      upload_(rhs.upload_), cgi_(rhs.cgi_), cgi_bin_(rhs.cgi_bin_), locationsMap_(rhs.locationsMap_),
+      upload_(rhs.upload_), cgi_(rhs.cgi_), locationsMap_(rhs.locationsMap_),
       isLociMatched_(rhs.isLociMatched_), uri_suffix_(rhs.uri_suffix_), redir_code_(rhs.redir_code_)
 {
 }
@@ -31,7 +31,7 @@ RequestConfig::RequestConfig(const RequestConfig &rhs, HttpRequest &request, Cli
       client_max_body_size_(rhs.client_max_body_size_), autoindex_(rhs.autoindex_),
       indexes_(rhs.indexes_), error_codes_(rhs.error_codes_), redirectMap_(rhs.redirectMap_),
       allowed_methods_(rhs.allowed_methods_), serverId(rhs.serverId), auth_(rhs.auth_),
-      upload_(rhs.upload_), cgi_(rhs.cgi_), cgi_bin_(rhs.cgi_bin_), locationsMap_(rhs.locationsMap_),
+      upload_(rhs.upload_), cgi_(rhs.cgi_), locationsMap_(rhs.locationsMap_),
       isLociMatched_(rhs.isLociMatched_), uri_suffix_(rhs.uri_suffix_), redir_code_(rhs.redir_code_)
 {
 }
@@ -58,7 +58,6 @@ RequestConfig &RequestConfig::operator=(const RequestConfig &rhs)
         auth_ = rhs.auth_;
         upload_ = rhs.upload_;
         cgi_ = rhs.cgi_;
-        cgi_bin_ = rhs.cgi_bin_;
         locationsMap_ = rhs.locationsMap_;
         isLociMatched_ = rhs.isLociMatched_;
         uri_suffix_ = rhs.uri_suffix_;
@@ -380,7 +379,7 @@ void RequestConfig::setUp(size_t targetServerIdx)
     setMethods(cascadeFilter("allow_methods", newTarget));
     setAuth(cascadeFilter("auth", newTarget));
     setCgi(cascadeFilter("cgi", newTarget));
-    setCgiBin(cascadeFilter("cgi-bin", newTarget));
+    // setCgiBin(cascadeFilter("cgi-bin", newTarget));
 }
 
 void RequestConfig::redirectLocation(std::string target)
@@ -466,11 +465,6 @@ void RequestConfig::setMethods(const VecStr &methods)
 void RequestConfig::setCgi(const VecStr &cgi)
 {
     cgi_ = cgi;
-}
-
-void RequestConfig::setCgiBin(const VecStr &cgi)
-{
-    cgi_bin_ = (cgi_bin_.empty()) ? "" : cgi[0];
 }
 
 void RequestConfig::assignCodes(const std::string &codes, const std::string &page, std::map<int, std::string> &resultMap)
@@ -663,11 +657,6 @@ std::vector<std::string> &RequestConfig::getCgi()
     return cgi_;
 }
 
-std::string &RequestConfig::getCgiBin()
-{
-    return cgi_bin_;
-}
-
 std::map<std::string, int> &RequestConfig::getLocationsMap()
 {
     return locationsMap_;
@@ -722,7 +711,6 @@ void RequestConfig::printConfigSetUp()
     std::cout << "\nCGI\n";
     printVec(cgi_, "SETUP");
     std::cout << std::endl;
-    std::cout << "\nCGI-BIN: " << getCgiBin() << std::endl;
 
     std::cout << "\n[Accepted Method] " << isMethodAccepted(getMethod());
     std::cout << "\n[content-length] " << getContentLength() << "\n"

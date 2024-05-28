@@ -6,7 +6,7 @@
 /*   By: drey <drey@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:28:07 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/27 22:55:42 by drey             ###   ########.fr       */
+/*   Updated: 2024/05/28 06:42:51 by drey             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void printRow(int width, int serverNum, int ipWidth, std::string ip) {
 
 
 void Servers::createServers() {
-    std::cout << "|" << std::string(8, ' ') << CURSIVE_GRAY << " Creating servers..." << RESET << std::string(8, ' ') << "|" << std::endl;
+    std::cout << "|" << std::string(7, ' ') << CURSIVE_GRAY << " Creating servers..." << RESET << std::string(9, ' ') << "|" << std::endl;
     std::vector<std::string> ports;
     createEpoll();
     ports = getPorts();
