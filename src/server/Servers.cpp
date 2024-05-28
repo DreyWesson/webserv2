@@ -6,7 +6,7 @@
 /*   By: drey <drey@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:28:07 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 06:42:51 by drey             ###   ########.fr       */
+/*   Updated: 2024/05/28 07:06:39 by drey             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -519,30 +519,30 @@ void Servers::setTimeout(int client_fd){
 }
 
 void Servers::checkClientTimeout(){
-	time_t current_time = time(NULL);
-	for (std::map<int, time_t>::iterator it = _client_time.begin(); it != _client_time.end(); it++)
-	{
-		if (_cgi_clients.find(it->first) != _cgi_clients.end())
-		{
-			if (current_time - it->second >= 2)
-			{
-				for (std::map<int, int>::iterator it2 = _cgi_clients_childfd.begin(); it2 != _cgi_clients_childfd.end(); it2++)
-				{
-					if (it2->second == it->first)
-					{
-						handleIncomingCgi(it2->first);
-						break;
-					}
-				}
-			}
-		}
-		else
-		if (current_time - it->second > 30)
-		{
-			std::cout << "Client FD: " << it->first << " timed out\n";
-			deleteClient(it->first);
-		}
-	}
+    time_t current_time = time(NULL);
+    for (std::map<int, time_t>::iterator it = _client_time.begin(); it != _client_time.end(); it++)
+    {
+        if (_cgi_clients.find(it->first) != _cgi_clients.end())
+        {
+            if (current_time - it->second >= 2)
+            {
+                for (std::map<int, int>::iterator it2 = _cgi_clients_childfd.begin(); it2 != _cgi_clients_childfd.end(); it2++)
+                {
+                    if (it2->second == it->first)
+                    {
+                        handleIncomingCgi(it2->first);
+                        return ;
+                    }
+                }
+            }
+        }
+        if (current_time - it->second > 10)
+        {
+            std::cout << "Client FD: " << it->first << " timed out\n";
+            deleteClient(it->first);
+            return ;
+        }
+    }
 }
 
 void Servers::deleteClient(int client_fd)
