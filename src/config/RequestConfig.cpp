@@ -114,7 +114,7 @@ bool RequestConfig::directiveExists(std::string directive, std::string location)
                 return true;
         }
     }
-    return false; // Directive not found in the specified location
+    return false;
 }
 
 const VecStr &RequestConfig::checkRootDB(std::string directive)
@@ -140,12 +140,6 @@ const VecStr &RequestConfig::checkRootDB(std::string directive)
 
 const VecStr &RequestConfig::cascadeFilter(std::string directive, std::string location = "")
 {
-    /// @note important to first pre-populate data in cascades:
-    // 1. preffered settings
-    // 2. http level
-    // 3. server level(locatn == "" == server-default settings)
-    // 4. location level
-
     const VecStr &dirValue = filterDataByDirectives(targetServer_, directive, location);
     if (!dirValue.empty())
         return dirValue;
@@ -379,7 +373,6 @@ void RequestConfig::setUp(size_t targetServerIdx)
     setMethods(cascadeFilter("allow_methods", newTarget));
     setAuth(cascadeFilter("auth", newTarget));
     setCgi(cascadeFilter("cgi", newTarget));
-    // setCgiBin(cascadeFilter("cgi-bin", newTarget));
 }
 
 void RequestConfig::redirectLocation(std::string target)
@@ -437,7 +430,6 @@ bool RequestConfig::isCgi(std::string path)
     if (lastDotPos != std::string::npos && lastDotPos != 0)
         ext = path.substr(lastDotPos);
     bool result = std::find(cgi_.begin(), cgi_.end(), ext) != cgi_.end();
-    // client_.is_cgi_ = result;
     client_.setCgi(result);
     return result;
 }
@@ -487,7 +479,6 @@ void RequestConfig::setMap(const VecStr &vec, std::map<int, std::string> &result
             int code;
             if (iss >> code)
             {
-                // Its a code. concatenate it
                 if (!codes.empty())
                     codes += " ";
                 codes += vec[i];
@@ -502,7 +493,6 @@ void RequestConfig::setMap(const VecStr &vec, std::map<int, std::string> &result
             }
         }
 
-        // Assign the last page to remaining codes
         if (!codes.empty())
             assignCodes(codes, vec.back(), resultMap);
     }
@@ -688,7 +678,6 @@ bool RequestConfig::isMethodAccepted(std::string &method)
 
 void RequestConfig::printConfigSetUp()
 {
-    /// @note debugging purpose
     std::cout << "\nTarget: " << getTarget() << std::endl;
     std::cout << "\nURI: " << getUri() << std::endl;
     std::cout << "\nROOT: " << getRoot() << std::endl;

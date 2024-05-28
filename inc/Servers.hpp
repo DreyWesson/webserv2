@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Servers.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: drey <drey@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:28:30 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/26 17:30:09 by alappas          ###   ########.fr       */
+/*   Updated: 2024/05/28 15:12:11 by drey             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ class Servers {
 			
 	public:
 		
-		//Constructors
 		Servers(ConfigDB &configDB);
 		~Servers();
 		Servers(const Servers &rhs);
@@ -49,7 +48,6 @@ class Servers {
 
 		ConfigDB &configDB_;
 
-		//Member functions
 		int		checkSocket(std::string port);
 		int		checkSocketPort(std::string port);
 		int		createSocket();

@@ -2,7 +2,6 @@
 
 bool isMethodCharValid(char ch)
 {
-    // According to RFC 7229, valid characters for method are:
     return (ch == '!' || ch == '#' || ch == '$' || ch == '%' || ch == '&' || ch == '\'' ||
             ch == '*' || ch == '+' || ch == '-' || ch == '.' || ch == '^' || ch == '_' ||
             ch == '`' || ch == '|' || ch == '~' || std::isdigit(ch) || std::isalpha(ch));
@@ -16,7 +15,6 @@ void trimWordFromEnd(int &start, int &end, std::string line)
         end--;
 }
 
-// Checks closed curly braces or not
 int checkCurly(std::string line)
 {
     int i = 0;
@@ -160,7 +158,6 @@ const std::string b64decode(const void *data, const size_t &len)
     return result;
 }
 
-// Base64 decode function overload for std::string input
 std::string b64decode(const std::string &str64)
 {
     return b64decode(str64.c_str(), str64.size());
@@ -198,7 +195,6 @@ std::string removeDupSlashes(std::string str)
         }
     }
 
-    // Remove the last slash if it exists
     if (!result.empty() && result[result.length() - 1] == '/')
         result.erase(result.length() - 1);
 
@@ -210,7 +206,6 @@ std::string formatHttpDate(time_t timeValue)
     char buf[32];
     struct tm *timeinfo = gmtime(&timeValue);
 
-    // Adjust for CEST => should be +2 hours but for some weird reason +4 works
     timeinfo->tm_hour += 4;
     mktime(timeinfo);
 
@@ -237,13 +232,10 @@ std::string generateETagForFile(File &file)
 
         if (lastModified.empty() || lastModified == "Unknown")
             return "";
-
-        // Convert lastModified to a number
         std::stringstream convert(lastModified);
         time_t modifiedTime;
         convert >> modifiedTime;
-        ss << std::hex << modifiedTime; // Convert modifiedTime to hexadecimal
-
+        ss << std::hex << modifiedTime;
         return ss.str();
     }
 

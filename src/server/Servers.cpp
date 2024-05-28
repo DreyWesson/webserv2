@@ -6,13 +6,11 @@
 /*   By: drey <drey@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:28:07 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 07:06:39 by drey             ###   ########.fr       */
+/*   Updated: 2024/05/28 15:53:32 by drey             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/AllHeaders.hpp"
-// #include "../../inc/Servers.hpp"
-// #include "../../inc/HttpRequest.hpp"
 
 Servers::Servers(ConfigDB &configDB) : _epoll_fds(-1), _server_fds(), _domain_to_server(), _ip_to_server(), 
 	_keyValues(), server_index(), server_fd_to_index(), client_to_server(), _client_amount(0),
@@ -226,7 +224,6 @@ void Servers::handleIncomingConnection(int server_fd){
 	client_to_server[new_socket] = server_fd;
 	_client_data[new_socket] = HttpRequest();
 	setTimeout(new_socket);
-    // std::cout << "Connection established on IP: " << _ip_to_server[server_fd] << ", server:" << server_fd << ", client: " << new_socket << "\n" << std::endl;
 	_client_amount++;
 }
 
@@ -259,14 +256,12 @@ void Servers::initEvents(){
 				bool server = false;
 				for (std::vector<int>::iterator it2 = _server_fds.begin(); it2 != _server_fds.end(); ++it2) {
 					if (events[i].data.fd == *it2) {
-						// std::cout << "\nIncoming connection on server: " << *it2 << std::endl;
 						handleIncomingConnection(*it2);
 						server = true;
 						break ;
 					}
 				}
 				if (!server && events[i].events & EPOLLIN) {
-					// std::cout << "\nIncoming data on client: " << events[i].data.fd << std::endl;
 					if (_cgi_clients_childfd.find(events[i].data.fd) != _cgi_clients_childfd.end())
 					{
 						setTimeout(_cgi_clients_childfd[events[i].data.fd]);
@@ -538,7 +533,6 @@ void Servers::checkClientTimeout(){
         }
         if (current_time - it->second > 10)
         {
-            std::cout << "Client FD: " << it->first << " timed out\n";
             deleteClient(it->first);
             return ;
         }
@@ -559,7 +553,6 @@ void Servers::deleteClient(int client_fd)
 		delete _cgi_clients[client_fd];
 		_cgi_clients.erase(client_fd);
 	}
-	// std::cout << "Connection closed on IP: " << _ip_to_server[client_to_server[client_fd]] << ", server:" << client_to_server[client_fd] << "\n" << std::endl;
 	if (_client_data.find(client_fd) != _client_data.end())
 		_client_data.erase(client_fd);
 	if (client_to_server.find(client_fd) != client_to_server.end())

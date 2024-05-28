@@ -6,7 +6,7 @@
 /*   By: drey <drey@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 11:19:53 by nikitos           #+#    #+#             */
-/*   Updated: 2024/05/27 21:52:51 by drey             ###   ########.fr       */
+/*   Updated: 2024/05/28 15:14:04 by drey             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,9 @@ std::string ConfigDB::readFile(char **argv)
         {
             line = line.substr(0, commentPos);
         }
-        line.erase(0, line.find_first_not_of(" \t\n\r\f\v")); // Trim leading whitespace
-        line.erase(line.find_last_not_of(" \t\n\r\f\v") + 1); // Trim trailing whitespace
+        line.erase(0, line.find_first_not_of(" \t\n\r\f\v"));
+        line.erase(line.find_last_not_of(" \t\n\r\f\v") + 1);
 
-        // If the line ends with a space, concatenate with the next line
         if (!line.empty() && line[line.size() - 1] == ' ')
             lastLine += line.substr(0, line.size() - 1) + " ";
         else

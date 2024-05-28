@@ -1,10 +1,7 @@
-// #include "../../inc/AllHeaders.hpp"
 #include "../../inc/MimeTypes.hpp"
 
 MimeTypes::MimeTypes()
 {
-    // Initialize the mapping of file extensions to MIME types
-    // Common text formats
     mimeMap[".html"] = "text/html";
     mimeMap[".htm"] = "text/html";
     mimeMap[".css"] = "text/css";
@@ -13,7 +10,6 @@ MimeTypes::MimeTypes()
     mimeMap[".xml"] = "application/xml";
     mimeMap[".txt"] = "text/plain";
 
-    // Images
     mimeMap[".jpg"] = "image/jpeg";
     mimeMap["image/jpg"] = ".jpeg";
     mimeMap[".jpeg"] = "image/jpeg";
@@ -23,7 +19,6 @@ MimeTypes::MimeTypes()
     mimeMap[".ico"] = "image/x-icon";
     mimeMap[".svg"] = "image/svg+xml";
 
-    // Audio and Video
     mimeMap[".mp3"] = "audio/mpeg";
     mimeMap[".mp4"] = "video/mp4";
     mimeMap[".mpeg"] = "video/mpeg" /*  */;
@@ -31,14 +26,12 @@ MimeTypes::MimeTypes()
     mimeMap[".webm"] = "video/webm";
     mimeMap[".wav"] = "audio/wav";
 
-    // Archives and Compressed Formats
     mimeMap[".zip"] = "application/zip";
     mimeMap[".rar"] = "application/x-rar-compressed";
     mimeMap[".tar"] = "application/x-tar";
     mimeMap[".gz"] = "application/gzip";
     mimeMap[".bz2"] = "application/x-bzip2";
 
-    // Documents
     mimeMap[".pdf"] = "application/pdf";
     mimeMap[".doc"] = "application/msword";
     mimeMap[".docx"] = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
@@ -47,13 +40,11 @@ MimeTypes::MimeTypes()
     mimeMap[".ppt"] = "application/vnd.ms-powerpoint";
     mimeMap[".pptx"] = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
 
-    // Fonts
     mimeMap[".ttf"] = "font/ttf";
     mimeMap[".otf"] = "font/otf";
     mimeMap[".woff"] = "font/woff";
     mimeMap[".woff2"] = "font/woff2";
 
-    // Others
     mimeMap[".avi"] = "video/x-msvideo";
     mimeMap[".bz"] = "application/x-bzip";
     mimeMap[".c"] = "text/x-c";

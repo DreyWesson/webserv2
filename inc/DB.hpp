@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   DB.hpp                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: drey <drey@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:55:40 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/25 18:55:41 by alappas          ###   ########.fr       */
+/*   Updated: 2024/05/28 15:11:51 by drey             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// DB.hpp
 #ifndef DB_HPP
 #define DB_HPP
 
@@ -30,4 +29,4 @@ struct DB
   const GroupedDBMap rootDB;
 };
 
-#endif // DB_HPP
+#endif

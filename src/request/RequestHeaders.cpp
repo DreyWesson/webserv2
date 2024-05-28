@@ -9,13 +9,12 @@ int HttpRequest::parseHeaders() {
 
     while ((headerEnd = req_buffer_.find("\r\n")) != std::string::npos) {
         
-        if (req_buffer_.find("\r\n") == 0) { // if /r/n is in index 0 it would mean end of headers
+        if (req_buffer_.find("\r\n") == 0) {
             req_buffer_.erase(0, headerEnd + 2);
             buffer_section_ = SPECIAL_HEADERS;
             break;
         }
 
-        // find headerKey
         if ((colonPos = req_buffer_.find(':', 0)) != std::string::npos) {
             if (colonPos == 0 || req_buffer_[colonPos - 1] == ' ')
                 return 400;
@@ -79,7 +78,6 @@ int HttpRequest::checkSpecialHeaders() {
             return 400;
         }
         try {
-            // Convert the value to an integer
             std::istringstream iss(value); 
             iss >> length_;
         } catch (const std::exception& e) {
@@ -94,7 +92,6 @@ int HttpRequest::checkSpecialHeaders() {
 
 
     if (headers_.count("method")) {
-        /// @todo this part needs to be thought through
         std::string value = headers_["method"];
         if (value != "POST" && value != "PUT") {
             std::cerr << "Unsupported HTTP method: " << value << std::endl;

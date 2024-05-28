@@ -56,7 +56,6 @@ void File::parseExt()
             mime_ext_ = mime_ext_.substr(0, 15);
     }
 
-    // Extract the file name without extension
     file_name_ = (lastDotPos != std::string::npos)
                      ? file.substr(0, lastDotPos)
                      : file;

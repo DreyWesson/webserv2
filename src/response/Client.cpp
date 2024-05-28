@@ -55,7 +55,6 @@ Client* Client::clone() const {
     return new Client(*this);
 }
 
-// Assignment operator overload
 Client &Client::operator=(const Client &rhs)
 {
 		if (this == &rhs)

@@ -26,7 +26,7 @@ int HttpRequest::parseChunkedBody()
             int parseResult = parseChunkSize(hex);
             if (parseResult != 0)
                 return parseResult;
-            req_buffer_.erase(0, end + 2); // Remove processed chunk size
+            req_buffer_.erase(0, end + 2);
             chunk_status_ = CHUNK_BODY;
         }
         else if (chunk_status_ == CHUNK_BODY)
@@ -35,7 +35,7 @@ int HttpRequest::parseChunkedBody()
             {
                 if (!req_buffer_.empty())
                     return parseChunkTrailer();
-                return 100; // Finished parsing chunked body and trailers
+                return 100;
             }
 
             if (req_buffer_.size() >= chunk_size_)
@@ -47,27 +47,24 @@ int HttpRequest::parseChunkedBody()
             }
             else
             {
-                // Chunk size larger than available data in buffer
                 body_.append(req_buffer_);
                 chunk_size_ -= req_buffer_.size();
-                req_buffer_.clear(); // Clear buffer after appending
+                req_buffer_.clear();
             }
         }
     }
-    return 200; // Incomplete chunk, need more data
+    return 200;
 }
 
 int HttpRequest::parseChunkSize(const std::string &hex)
 {
-    // Convert hex chunk size to integer
     std::istringstream hexStream(hex);
     unsigned long tempChunkSize = 0;
     hexStream >> std::hex >> tempChunkSize;
     
     if (hexStream.fail() || hexStream.bad())
-        return 400; // Bad Request: Invalid chunk size format
+        return 400;
 
-    // Ensure tempChunkSize is within the range of size_t
     if (tempChunkSize > static_cast<unsigned long>(std::numeric_limits<size_t>::max()))
         return 400;
     chunk_size_ = static_cast<size_t>(tempChunkSize);
@@ -84,7 +81,6 @@ int HttpRequest::parseChunkTrailer()
         line = req_buffer_.substr(0, end);
         req_buffer_.erase(0, end + 2);
 
-        // Check for an empty line, indicating the end of trailers
         if (line.empty())
         {
             break;
@@ -101,8 +97,7 @@ int HttpRequest::parseChunkTrailer()
         }
         else
         {
-            // If no separator found, it's an invalid format
-            return 400; // Bad Request: Invalid header format
+            return 400;
         }
     }
 

@@ -288,14 +288,12 @@ void HttpResponse::handlePutPostRequest()
 			if (mkdir(dir.getFilePath().c_str(), 0755) == -1)
 			{
 				std::cout << "mkdir : " << strerror(errno) << std::endl;
-				// return 500;
 			}
 		}
 		file_->set_path(dir.getFilePath() + "/" + config_.getTarget());
 	}
 	headers_["Location"] = removeDupSlashes(path);
 
-	// return 201; // Created
 }
 
 void HttpResponse::handleAcceptLanguage(std::vector<std::string> &matches)
@@ -374,10 +372,9 @@ std::string HttpResponse::response_log(LogLevel level)
 		}
 	}
 
-	// Write the log to stdout
 	std::cout << ret << std::endl;
 
-	return ret; // Optionally return the log string if needed elsewhere
+	return ret;
 }
 
 bool HttpResponse::getRedirect()
@@ -424,11 +421,8 @@ void HttpResponse::createResponse()
 		header_block += it->first + ": " + it->second + "\r\n";
 	}
 
-	header_block += "\r\n"; // add empty line after headers
-
-	// Concatenate status line, headers, and body
+	header_block += "\r\n";
 	response_ = status_line + header_block + body_;
-	// Calculate header and body sizes
 	header_size_ = status_line.size() + header_block.size();
 	body_size_ = body_.size();
 	body_.clear();
