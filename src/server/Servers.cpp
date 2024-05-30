@@ -111,7 +111,7 @@ int Servers::bindSocket(std::string s_port){
 		address.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
 	address.sin_port = htons(port);
 	if (bind(_server_fds.back(), (struct sockaddr *)&address, sizeof(address)) == -1) {
-		std::cerr << "Bind failed" << std::endl;
+		std::cerr << RED << "Bind failed" << RESET << std::endl;
 		return (0);
 	}
 	for (std::map<int, std::vector<std::string> >::iterator it = server_index.begin(); it != server_index.end(); it++){
