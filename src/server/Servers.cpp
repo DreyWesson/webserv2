@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Servers.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drey <drey@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:28:07 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 15:53:32 by drey             ###   ########.fr       */
+/*   Updated: 2024/05/29 21:55:29 by alappas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,6 @@ void Servers::createServers() {
                 else {
                     assignDomain(*it2, _server_fds.back());
 					printRow(serverNumberWidth - 2,_server_fds.back() - 3, portWidth - 2,_ip_to_server[_server_fds.back()]);
-
                 }
             }
         }
@@ -278,6 +277,7 @@ void Servers::initEvents(){
 			std::cerr << e.what() << std::endl;
 		}
 		checkClientTimeout();
+		// printData();
 	}
 }
 
@@ -446,8 +446,9 @@ size_t Servers::handleResponse(int reqStatus, int server_fd, int new_socket, Htt
 			DB db = {configDB_.getServers(), configDB_.getRootConfig()};
 			Client client(db, host_port, parser, server_fd_to_index[server_fd], reqStatus);
 			client.setupResponse();
-			if (client.getCgi() || client.getCgiResponse())
+			if (client.getResponseRef().getStatus() <= 400 && (client.getCgi() || client.getCgiResponse()))
 			{
+				_cgi_clients[new_socket] = NULL;
 				_cgi_clients[new_socket] = new CgiClient(client, this->_epoll_fds);
 				_cgi_clients_childfd[_cgi_clients[new_socket]->getPipeOut()] =  new_socket;
 				return (1);
@@ -493,6 +494,25 @@ int Servers::handleIncomingCgi(int child_fd){
 			break;
 		}
 	}
+	if (_cgi_clients[client_fd] == NULL)
+	{
+		removeFromEpoll(child_fd);
+		deleteClient(client_fd);
+		for (std::map<int, int>::iterator it = _cgi_clients_childfd.begin(); it != _cgi_clients_childfd.end();)
+		{
+			if (it->second == client_fd)
+			{
+				removeFromEpoll(it->first);	
+				std::map<int, int>::iterator eraseIt = it;
+				// _cgi_clients_childfd.erase(it->first);
+				it++;
+				_cgi_clients_childfd.erase(eraseIt);
+			}
+			else
+				it++;
+		}
+		return 0;
+	}
 	_cgi_clients[client_fd]->HandleCgi();
 	if (_cgi_clients[client_fd]->getStatusCode() == 200 || _cgi_clients[client_fd]->getStatusCode() == 500)
 	{
@@ -514,36 +534,35 @@ void Servers::setTimeout(int client_fd){
 }
 
 void Servers::checkClientTimeout(){
-    time_t current_time = time(NULL);
-    for (std::map<int, time_t>::iterator it = _client_time.begin(); it != _client_time.end(); it++)
-    {
-        if (_cgi_clients.find(it->first) != _cgi_clients.end())
-        {
-            if (current_time - it->second >= 2)
-            {
-                for (std::map<int, int>::iterator it2 = _cgi_clients_childfd.begin(); it2 != _cgi_clients_childfd.end(); it2++)
-                {
-                    if (it2->second == it->first)
-                    {
-                        handleIncomingCgi(it2->first);
-                        return ;
-                    }
-                }
-            }
-        }
-        if (current_time - it->second > 10)
-        {
-            deleteClient(it->first);
-            return ;
-        }
-    }
+	time_t current_time = time(NULL);
+	for (std::map<int, time_t>::iterator it = _client_time.begin(); it != _client_time.end(); it++)
+	{
+		if (_cgi_clients.find(it->first) != _cgi_clients.end())
+		{
+			if (current_time - it->second >= 2)
+			{
+				for (std::map<int, int>::iterator it2 = _cgi_clients_childfd.begin(); it2 != _cgi_clients_childfd.end(); it2++)
+				{
+					if (it2->second == it->first)
+					{
+						handleIncomingCgi(it2->first);
+						return ;
+					}
+				}
+			}
+		}
+		if (current_time - it->second > 10)
+		{
+			std::cout << "Client FD: " << it->first << " timed out\n";
+			deleteClient(it->first);
+			return ;
+		}
+	}
 }
 
 void Servers::deleteClient(int client_fd)
 {
-	if (epoll_ctl(this->_epoll_fds, EPOLL_CTL_DEL, client_fd, NULL) == -1) {
-        std::cerr << "Failed to remove client file descriptor from epoll instance." << std::endl;
-    }
+	removeFromEpoll(client_fd);
     if (close(client_fd) == -1)
 		std::cerr << "Close failed with error: " << strerror(errno) << std::endl;
 	if (_client_amount > 0)
@@ -559,4 +578,30 @@ void Servers::deleteClient(int client_fd)
 		client_to_server.erase(client_fd);
 	if (_client_time.find(client_fd) != _client_time.end())
 		_client_time.erase(client_fd);
+}
+
+void Servers::printData()
+{
+	std::cout << "--------CLIENT-TO-SERVER--------" << std::endl;
+	for (std::map<int, int>::iterator it = client_to_server.begin(); it != client_to_server.end(); it++)
+		std::cout << "Client: " << it->first << " Server: " << it->second << std::endl;
+	std::cout << "----------CLIENT-DATA-----------" << std::endl;
+	for (std::map<int, HttpRequest>::iterator it = _client_data.begin(); it != _client_data.end(); it++)
+		std::cout << "Client: " << it->first << std::endl;
+	std::cout << "----------CGI-CLIENTS-----------" << std::endl;
+	for (std::map<int, CgiClient*>::iterator it = _cgi_clients.begin(); it != _cgi_clients.end(); it++)
+		std::cout << "Client: " << it->first << " Response: " << it->second->getResponseString() << std::endl;
+	std::cout << "--------CGI-CLIENTS-CHILDFD--------" << std::endl;
+	for (std::map<int, int>::iterator it = _cgi_clients_childfd.begin(); it != _cgi_clients_childfd.end(); it++)
+		std::cout << "Child: " << it->first << " Client: " << it->second << std::endl;
+	std::cout << "----------CLIENT-TIME-----------" << std::endl;
+	for (std::map<int, time_t>::iterator it = _client_time.begin(); it != _client_time.end(); it++)
+		std::cout << "Client: " << it->first << " Time: " << it->second << std::endl;
+	std::cout << std::endl;
+}
+
+void	Servers::removeFromEpoll(int fd){
+	if (epoll_ctl(this->_epoll_fds, EPOLL_CTL_DEL, fd, NULL) == -1) {
+		std::cerr << "Failed to remove client file descriptor from epoll instance." << std::endl;
+	}
 }

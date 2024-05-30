@@ -854,7 +854,7 @@ html {
   font-size: 4rem;
   margin: 0;
   padding: 0;
-  color: var(--bs-green);
+  color: var(--bs-white);
 }
 @media (min-width: 992px) {
   .masthead {

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   MimeTypes.cpp                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/28 23:16:19 by alappas           #+#    #+#             */
+/*   Updated: 2024/05/28 23:16:25 by alappas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/MimeTypes.hpp"
 
 MimeTypes::MimeTypes()
@@ -21,7 +33,7 @@ MimeTypes::MimeTypes()
 
     mimeMap[".mp3"] = "audio/mpeg";
     mimeMap[".mp4"] = "video/mp4";
-    mimeMap[".mpeg"] = "video/mpeg" /*  */;
+    mimeMap[".mpeg"] = "video/mpeg";
     mimeMap[".ogg"] = "audio/ogg";
     mimeMap[".webm"] = "video/webm";
     mimeMap[".wav"] = "audio/wav";

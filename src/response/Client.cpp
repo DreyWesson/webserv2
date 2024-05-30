@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Client.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/28 23:15:54 by alappas           #+#    #+#             */
+/*   Updated: 2024/05/28 23:15:55 by alappas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/AllHeaders.hpp"
 
 Client::Client(DB &db, Listen &host_port, HttpRequest &req_, size_t targetServerIdx, int status)
@@ -140,7 +152,6 @@ void Client::setupResponse()
 
 	if (!config_)
 		setupConfig();
-
 	response_ = new HttpResponse(*config_, statusCode_);
 
 	int loop = 0;

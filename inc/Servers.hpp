@@ -6,7 +6,7 @@
 /*   By: drey <drey@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:28:30 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 15:12:11 by drey             ###   ########.fr       */
+/*   Updated: 2024/05/29 18:52:49 by alappas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ class Servers {
 		std::map<std::string, std::vector<std::string> > getKeyValue() const;
 		bool getRequest(int client_fd, std::string &request);
 		int setNonBlocking(int fd);
+		void printData();
+		void removeFromEpoll(int fd);
 
 		void handleIncomingConnection(int server_fd);
 		void handleIncomingData(int client_fd);
