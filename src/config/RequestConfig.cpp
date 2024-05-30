@@ -664,31 +664,6 @@ std::map<std::string, int> &RequestConfig::getLocationsMap()
     return locationsMap_;
 }
 
-// bool RequestConfig::isMethodAccepted(std::string &method)
-// {
-//         bool methodFlag = false;
-//     if (isCgi(request_.getURI())) {
-//         location_cache_ = findLongestMatch(request_.getURI());
-//         setMethods(cascadeFilter("allow_methods", location_cache_));
-//         methodFlag = directiveExists("allow_methods", location_cache_) || directiveExists("limit_except", location_cache_);
-//     } else {
-//         methodFlag = directiveExists("allow_methods", target_) || directiveExists("limit_except", target_);
-//     }
-
-//     if (!methodFlag)
-//         return true;
-
-//     if (allowed_methods_.empty())
-//     {
-//         allowed_methods_.push_back("GET");
-//         allowed_methods_.push_back("POST");
-//         allowed_methods_.push_back("DELETE");
-//     }
-    
-//     return (method.empty()) ? false : (std::find(allowed_methods_.begin(), allowed_methods_.end(), method) != allowed_methods_.end());
-// }
-
-
 bool RequestConfig::isMethodAccepted(std::string &method)
 {
     bool allowedMethod = false;

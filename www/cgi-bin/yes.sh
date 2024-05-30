@@ -1,3 +1,1 @@
-# yes
-ls
-cat
+yes
