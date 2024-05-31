@@ -58,7 +58,6 @@ int HttpResponse::POST()
     if (!file_->exists())
     {
         file_->createFile(body_);
-        std::cout << "*******201 ******" << std::endl;
         status_code = 201;
     }
     else
@@ -73,7 +72,6 @@ int HttpResponse::POST()
         }
         else
         {
-            std::cout << "&&&&&&& 201 ******" << std::endl;
             file_->appendFile(body_, ext);
             status_code = 201;
         }

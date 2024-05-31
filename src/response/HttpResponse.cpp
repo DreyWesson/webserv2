@@ -182,6 +182,7 @@ void HttpResponse::build()
 		error_code_ = 404;
 	std::string &method = config_.getMethod();
 	file_ = new File();
+	bool isBodyLimit = config_.getMethod() == "POST" || config_.getMethod() == "PUT";
 
 	if (findLocation(config_.getTarget()).first != "")
 	{
@@ -202,7 +203,7 @@ void HttpResponse::build()
 		status_code_ = 405;
 		headers_["Allow"] = buildMethodList();
 	}
-	else if (config_.getClientMaxBodySize() > 0 && config_.getBody().length() > config_.getClientMaxBodySize())
+	else if (isBodyLimit && config_.getClientMaxBodySize() > 0 && config_.getBody().length() > config_.getClientMaxBodySize())
 	{
 		status_code_ = 413;
 	}
