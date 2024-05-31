@@ -191,6 +191,7 @@ void HttpResponse::build()
 	}
 
 	file_->set_path(config_.getRoot() + "/" + config_.getTarget());
+	std::cout << "File path: " << file_->getFilePath() << std::endl;
 
 	bool isAuthorized = config_.getAuth() != "off" && !checkAuth();
 
