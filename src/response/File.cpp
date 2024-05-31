@@ -196,11 +196,12 @@ void File::appendFile(const std::string &body)
     closeFile();
 }
 
-void File::appendFile(const std::string &body,std::string ext)
+void File::appendFile(const std::string &body,std::string x_filename)
 {
     int flags = O_CREAT | O_WRONLY | O_TRUNC;
-    std::string dirPath = "www";
-    std::string newPath = dirPath + "/serverDB/" + path_ + ext;
+    std::string dirPath = "www/serverDB/";
+
+    std::string newPath = dirPath + x_filename;
 
     if (!exists(dirPath))
     {

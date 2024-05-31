@@ -20,7 +20,6 @@ int HttpRequest::parseHeaders() {
     std::string headerVal;
 
     while ((headerEnd = req_buffer_.find("\r\n")) != std::string::npos) {
-        
         if (req_buffer_.find("\r\n") == 0) {
             req_buffer_.erase(0, headerEnd + 2);
             buffer_section_ = SPECIAL_HEADERS;

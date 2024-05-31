@@ -72,7 +72,10 @@ int HttpResponse::POST()
         }
         else
         {
-            file_->appendFile(body_, ext);
+            std::string x_filename = config_.getHeader("X-Filename");
+            std::string default_name = "default" + ext;
+            x_filename = !x_filename.empty() ? x_filename : default_name;
+            file_->appendFile(body_, x_filename);
             status_code = 201;
         }
     }
