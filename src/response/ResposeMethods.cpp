@@ -48,6 +48,32 @@ int HttpResponse::GET()
     return 200;
 }
 
+std::string extractContentType(const std::string& headerValue) {
+    std::size_t semicolonPos = headerValue.find(';');
+    if (semicolonPos == std::string::npos) {
+        return headerValue;
+    }
+    return headerValue.substr(0, semicolonPos);
+}
+
+std::string extractFilename(const std::string& body) {
+    size_t filenamePos = body.find("filename=\"");
+    if (filenamePos != std::string::npos) {
+        filenamePos += 10;
+
+        size_t closingQuotePos = body.find("\"", filenamePos);
+        if (closingQuotePos != std::string::npos) {
+            return body.substr(filenamePos, closingQuotePos - filenamePos);
+        }
+    }
+    return "";
+}
+
+bool containsBoundary(const std::string& input) {
+    return input.find("boundary") != std::string::npos;
+}
+
+
 int HttpResponse::POST()
 {
     int status_code = 500;
@@ -63,7 +89,11 @@ int HttpResponse::POST()
     else
     {
         MimeTypes mimeTypes;
-        std::string ext = mimeTypes.getExt(config_.getHeader("content-type"));
+        std::string contentType = config_.getHeader("content-type");
+        bool isMultipart = containsBoundary(contentType);
+        contentType =  isMultipart ? extractContentType(contentType) : contentType;
+
+        std::string ext = mimeTypes.getExt(extractContentType(config_.getHeader("content-type")));
         
         if (ext.empty())
         {
@@ -72,9 +102,18 @@ int HttpResponse::POST()
         }
         else
         {
-            std::string x_filename = config_.getHeader("X-Filename");
             std::string default_name = "default" + ext;
+            std::string x_filename = isMultipart ? extractFilename(body_) : config_.getHeader("X-Filename");
             x_filename = !x_filename.empty() ? x_filename : default_name;
+
+            if (isMultipart) {
+                size_t bodyStart = body_.find("\r\n\r\n");
+                size_t bodyEnd = body_.find("\r\n-");
+
+                std::string multiPartBody = body_.substr(bodyStart + 4, bodyEnd - bodyStart - 4);
+                body_.clear();
+                body_.append(multiPartBody);
+            }
             file_->appendFile(body_, x_filename);
             status_code = 201;
         }
