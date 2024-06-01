@@ -6,7 +6,7 @@
 /*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:45:41 by doduwole          #+#    #+#             */
-/*   Updated: 2024/06/01 10:45:42 by doduwole         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:09:26 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ bool File::checkFileExists(const std::string &filePath)
         std::cerr << "Error checking existence for " << filePath << ": " << strerror(errno) << std::endl;
         return false;
     }
-    return true; // File exists
+    return true;
 }
 
 bool File::exists()

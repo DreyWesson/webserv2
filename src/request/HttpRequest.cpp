@@ -6,7 +6,7 @@
 /*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:44:46 by doduwole          #+#    #+#             */
-/*   Updated: 2024/06/01 10:44:48 by doduwole         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:06:09 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,29 +195,9 @@ size_t HttpRequest::getContentLength()
   return length_;
 }
 
-bool HttpRequest::timeout()
-{
-  if (buffer_section_ != COMPLETE)
-  {
-    buffer_section_ = ERROR;
-    return true;
-  }
-  return false;
-}
-
 int HttpRequest::getStatus()
 {
   return buffer_section_;
-}
-
-time_t HttpRequest::get_start_timer_in_sec()
-{
-  return start_tv_.tv_sec;
-}
-
-time_t HttpRequest::get_last_timer_in_sec()
-{
-  return last_tv_.tv_sec;
 }
 
 void HttpRequest::print_uri_extracts()

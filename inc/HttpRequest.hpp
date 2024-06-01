@@ -6,7 +6,7 @@
 /*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:42:16 by doduwole          #+#    #+#             */
-/*   Updated: 2024/06/01 10:42:19 by doduwole         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:06:16 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,6 @@ public:
 
     void setTarget(std::string target);
     void printRequest(HttpRequest parser);
-
-    bool timeout();
-    time_t get_start_timer_in_sec();
-    time_t get_last_timer_in_sec();
-    
     int getStatus();
 };
 

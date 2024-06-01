@@ -6,7 +6,7 @@
 /*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:40:43 by doduwole          #+#    #+#             */
-/*   Updated: 2024/06/01 13:53:33 by doduwole         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:03:47 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,15 @@
 #include "DB.hpp"
 #include "Colors.hpp"
 
-// void
 void trimWordFromEnd(int &start, int &end, std::string line);
 void handleLogFormat(std::string line, std::string &value, std::vector<std::string> tokens, std::vector<std::string>::const_iterator &it);
 void ft_errors(std::string arg, int i);
 
-// int
 int checkCurly(std::string line);
 
-// vector
 std::vector<std::string> customSplit(const std::string &s, char delim);
 std::vector<std::string> split(const std::string &s, char delimiter);
 
-// std::string
 std::string cutTillSemicolon(std::string str);
 std::string getIndexVariableKey(std::string key, std::map<std::string, std::vector<std::string> > keyValues);
 std::string getValue(const std::map<std::string, std::vector<std::string> > &keyValues, const std::string &key);
@@ -93,7 +89,6 @@ std::string removeDupSlashes(std::string str);
 std::string formatHttpDate(time_t timeValue);
 std::string get_http_date();
 std::string md5(const std::string& input);
-// std::string generateETagForFile(File& file);
 bool isMethodCharValid(char ch);
 bool isAlpha(char c);
 bool isDigit(char c);

@@ -6,7 +6,7 @@
 /*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:42:09 by doduwole          #+#    #+#             */
-/*   Updated: 2024/06/01 10:42:10 by doduwole         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:04:32 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ struct directory_listing
 
     directory_listing() : is_dir_(false){};
 };
-
-bool sort_auto_listing(directory_listing i, directory_listing j);
 
 
 class File

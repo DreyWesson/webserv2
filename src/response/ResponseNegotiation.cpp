@@ -6,73 +6,11 @@
 /*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:46:16 by doduwole          #+#    #+#             */
-/*   Updated: 2024/06/01 12:55:35 by doduwole         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:10:04 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "../../inc/HttpResponse.hpp"
-
-// std::pair<std::string, double> HttpResponse::extractLangAndQ(const std::string &langAndQ)
-// {
-//   std::string lang;
-//   double qValue = 1.0;
-
-//   std::size_t qPos = langAndQ.find(";q=");
-//   if (qPos != std::string::npos)
-//   {
-//     lang = langAndQ.substr(0, qPos);
-//     std::string qStr = langAndQ.substr(qPos + 3);
-//     try
-//     {
-//       qValue = atof(qStr.c_str());
-//     }
-//     catch (...)
-//     {
-//       qValue = 0.0;
-//     }
-//   }
-//   else
-//   {
-//     lang = langAndQ;
-//   }
-
-//   return std::make_pair(lang, qValue);
-// }
-
-// std::string HttpResponse::findBestLanguage(const std::vector<std::string> &matches, const std::vector<std::pair<std::string, double> > &langQPairs)
-// {
-//   std::string bestLanguage;
-//   double bestQValue = 0.0;
-
-//   for (std::vector<std::pair<std::string, double> >::const_iterator it = langQPairs.begin(); it != langQPairs.end(); ++it)
-//   {
-//     const std::string &lang = it->first;
-//     double qValue = it->second;
-
-//     if (lang == "*")
-//     {
-//       bestLanguage = matches.front();
-//       bestQValue = qValue;
-//       break;
-//     }
-//     else
-//     {
-//       for (std::vector<std::string>::const_iterator matchIt = matches.begin(); matchIt != matches.end(); ++matchIt)
-//       {
-//         if (matchIt->find("." + lang) != std::string::npos && qValue > bestQValue)
-//         {
-//           bestLanguage = *matchIt;
-//           bestQValue = qValue;
-//           break;
-//         }
-//       }
-//     }
-//   }
-
-//   return bestLanguage;
-// }
 
 int ftstoi(const std::string &str, std::size_t *pos = NULL, int base = 10) {
     static const std::string baseChars = "0123456789abcdef";

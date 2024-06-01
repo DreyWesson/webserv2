@@ -6,7 +6,7 @@
 /*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:45:21 by doduwole          #+#    #+#             */
-/*   Updated: 2024/06/01 12:46:15 by doduwole         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:09:02 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,6 @@ Client::Client(const Client &rhs) : host_port_(rhs.host_port_), db_(rhs.db_), se
 	else
 		response_ = NULL;
 }
-
-// Client* Client::clone() const {
-//     return new Client(*this);
-// }
 
 Client &Client::operator=(const Client &rhs)
 {

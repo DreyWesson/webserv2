@@ -6,11 +6,9 @@
 /*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:44:35 by doduwole          #+#    #+#             */
-/*   Updated: 2024/06/01 12:53:39 by doduwole         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:08:19 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "../../inc/AllHeaders.hpp"
 
@@ -714,12 +712,6 @@ void RequestConfig::printConfigSetUp()
     std::cout << "\n[content-length] " << getContentLength() << "\n"
               << std::endl;
 }
-
-// void RequestConfig::setSubstr(int start)
-// {
-//     std::string body = request_.getBody();
-// 	body = body.substr(start);
-// }
 
 void RequestConfig::setClient(Client &client)
 {
