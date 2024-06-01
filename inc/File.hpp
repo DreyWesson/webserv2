@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   File.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:14:37 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:14:39 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:42:09 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:42:10 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef FILE_HPP
 #  define FILE_HPP

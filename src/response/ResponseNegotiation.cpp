@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ResponseNegotiation.cpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:16:31 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:16:32 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:46:16 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:46:17 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../../inc/HttpResponse.hpp"
 

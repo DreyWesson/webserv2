@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   HttpStatusCode.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:14:51 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:14:52 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:42:38 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:42:40 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

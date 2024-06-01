@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   HttpResponse.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:16:06 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/29 21:53:40 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:45:51 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:45:53 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../inc/HttpResponse.hpp"
 

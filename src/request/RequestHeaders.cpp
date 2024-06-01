@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestHeaders.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:15:43 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:15:44 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:45:04 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:45:06 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

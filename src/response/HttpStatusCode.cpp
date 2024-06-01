@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   HttpStatusCode.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:16:11 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:16:12 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:45:59 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:46:00 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../../inc/AllHeaders.hpp"
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   configHelpers.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:15:24 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:15:25 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:44:20 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:44:23 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

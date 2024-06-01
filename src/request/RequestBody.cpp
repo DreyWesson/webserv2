@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   RequestBody.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:15:38 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:15:39 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:44:57 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:44:58 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../../inc/HttpRequest.hpp"
 

@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   MimeTypes.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:16:19 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:16:25 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:46:07 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:46:08 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../../inc/MimeTypes.hpp"
 

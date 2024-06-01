@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:14:05 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:14:08 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:41:26 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:41:29 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef CLIENT_HPP
 #define CLIENT_HPP

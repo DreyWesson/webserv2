@@ -6,7 +6,7 @@
 /*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:25:18 by doduwole          #+#    #+#             */
-/*   Updated: 2024/06/01 10:25:19 by doduwole         ###   ########.fr       */
+/*   Updated: 2024/06/01 10:39:32 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,6 @@ int HttpResponse::GET()
     pthread_mutex_unlock(&g_write);
 
     return 200;
-}
-
-std::string extractContentType(const std::string& headerValue) {
-    std::size_t semicolonPos = headerValue.find(';');
-    if (semicolonPos == std::string::npos) {
-        return headerValue;
-    }
-    return headerValue.substr(0, semicolonPos);
 }
 
 std::string extractFilename(const std::string& body) {
@@ -126,7 +118,8 @@ int HttpResponse::POST() {
         if (isMultipart && !boundary.empty()) {
             std::string filename = extractFilename(body_);
             std::string fileContent = extractContent(body_, boundary);
-
+            body_.clear();
+            body_.append(fileContent);
             if (!filename.empty() && !fileContent.empty()) {
                 file_->appendFile(fileContent, filename);
                 status_code = 201;

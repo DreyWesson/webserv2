@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   AllHeaders.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:13:54 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:13:57 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:40:43 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:40:44 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #ifndef ALLHEADERS_HPP
 #define ALLHEADERS_HPP

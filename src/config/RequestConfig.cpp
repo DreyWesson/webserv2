@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   RequestConfig.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:15:28 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/29 21:41:13 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:44:35 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:44:36 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../../inc/AllHeaders.hpp"
 

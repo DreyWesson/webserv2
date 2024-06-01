@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   CgiHandle.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/29 01:28:35 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 12:28:54 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:46:44 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:46:45 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include  "../../inc/AllHeaders.hpp"
 

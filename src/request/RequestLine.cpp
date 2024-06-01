@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   RequestLine.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:15:46 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:15:47 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:45:12 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:45:13 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../../inc/HttpRequest.hpp"
 

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   MimeTypes.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:14:56 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:14:57 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:43:07 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:43:09 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MIMETYPES_HPP
 #define MIMETYPES_HPP

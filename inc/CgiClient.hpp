@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CgiClient.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/24 00:02:06 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/26 14:47:20 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:41:03 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:41:06 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   HttpResponse.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:14:47 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:14:48 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:42:26 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:42:27 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #ifndef HTTP_RESPONSE_HPP
 #define HTTP_RESPONSE_HPP

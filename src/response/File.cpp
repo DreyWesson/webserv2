@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   File.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:16:02 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:16:03 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:45:41 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:45:42 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../../inc/File.hpp"
 

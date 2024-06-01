@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:15:54 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:15:55 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:45:21 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:45:22 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../../inc/AllHeaders.hpp"
 
