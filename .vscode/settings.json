@@ -71,7 +71,15 @@
     "locale": "cpp",
     "mutex": "cpp",
     "ratio": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "set": "cpp",
+    "regex": "cpp",
+    "chrono": "cpp",
+    "codecvt": "cpp",
+    "fstream": "cpp",
+    "iomanip": "cpp",
+    "cinttypes": "cpp",
+    "list": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "clang",
   "C_Cpp_Runner.cppCompilerPath": "clang++",
