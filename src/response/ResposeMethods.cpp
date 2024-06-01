@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ResposeMethods.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 23:16:35 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:16:36 by alappas          ###   ########.fr       */
+/*   Created: 2024/06/01 10:25:18 by doduwole          #+#    #+#             */
+/*   Updated: 2024/06/01 10:25:19 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,64 +69,86 @@ std::string extractFilename(const std::string& body) {
     return "";
 }
 
+std::string extractBoundary(const std::string& contentType) {
+    size_t boundaryPos = contentType.find("boundary=");
+    if (boundaryPos == std::string::npos) {
+        return "";
+    }
+    return contentType.substr(boundaryPos + 9);
+}
+
 bool containsBoundary(const std::string& input) {
     return input.find("boundary") != std::string::npos;
 }
 
+std::string extractContent(const std::string& body, const std::string& boundary) {
+    std::string boundaryLine = "--" + boundary;
+    std::string endBoundaryLine = boundaryLine + "--";
 
-int HttpResponse::POST()
-{
+    size_t boundaryStart = body.find(boundaryLine);
+    if (boundaryStart == std::string::npos) {
+        return "";
+    }
+    boundaryStart += boundaryLine.length() + 2;
+
+    size_t headerEnd = body.find("\r\n\r\n", boundaryStart);
+    if (headerEnd == std::string::npos) {
+        return "";
+    }
+    headerEnd += 4;
+
+    size_t contentEnd = body.find(boundaryLine, headerEnd);
+    if (contentEnd == std::string::npos) {
+        contentEnd = body.find(endBoundaryLine, headerEnd);
+    }
+    if (contentEnd == std::string::npos) {
+        return "";
+    }
+    contentEnd -= 2;
+
+    return body.substr(headerEnd, contentEnd - headerEnd);
+}
+
+int HttpResponse::POST() {
     int status_code = 500;
-
     body_ = config_.getBody();
 
     pthread_mutex_lock(&g_write);
-    if (!file_->exists())
-    {
+    if (!file_->exists()) {
         file_->createFile(body_);
         status_code = 201;
-    }
-    else
-    {
+    } else {
         MimeTypes mimeTypes;
         std::string contentType = config_.getHeader("content-type");
         bool isMultipart = containsBoundary(contentType);
-        contentType =  isMultipart ? extractContentType(contentType) : contentType;
+        std::string boundary = isMultipart ? extractBoundary(contentType) : contentType;
 
-        std::string ext = mimeTypes.getExt(extractContentType(config_.getHeader("content-type")));
-        
-        if (ext.empty())
-        {
-            std::cerr << "Invalid content type" << std::endl;
-            status_code = 415;
-        }
-        else
-        {
-            std::string default_name = "default" + ext;
-            std::string x_filename = isMultipart ? extractFilename(body_) : config_.getHeader("X-Filename");
-            x_filename = !x_filename.empty() ? x_filename : default_name;
+        if (isMultipart && !boundary.empty()) {
+            std::string filename = extractFilename(body_);
+            std::string fileContent = extractContent(body_, boundary);
 
-            if (isMultipart) {
-                size_t bodyStart = body_.find("\r\n\r\n");
-                size_t bodyEnd = body_.find("\r\n-");
-
-                std::string multiPartBody = body_.substr(bodyStart + 4, bodyEnd - bodyStart - 4);
-                body_.clear();
-                body_.append(multiPartBody);
+            if (!filename.empty() && !fileContent.empty()) {
+                file_->appendFile(fileContent, filename);
+                status_code = 201;
+            } else {
+                status_code = 400;
             }
-            file_->appendFile(body_, x_filename);
-            status_code = 201;
+        } else {
+            std::cerr << "Invalid content type or boundary not found" << std::endl;
+            status_code = 415;
         }
     }
     pthread_mutex_unlock(&g_write);
 
     headers_["Content-Length"] = ftos(body_.length());
 
-    if (!file_->getFilePath().empty())
+    if (!file_->getFilePath().empty()) {
         headers_["Location"] = file_->getFilePath();
+    }
 
     return status_code;
 }
+
 
 int HttpResponse::PUT()
 {
