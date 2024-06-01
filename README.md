@@ -494,3 +494,102 @@ Extract Server Name and Domain: For each port entry found, it extracts the serve
 Check for Existing Assignment: It checks if the domain name has already been assigned to the server file descriptor. If not, it adds the domain name to the _domain_to_server map associated with the server_fd. If no domain name is found in the configuration settings, it defaults to assigning "localhost" as the domain.
 
 These functions essentially map domain names to server file descriptors based on the configuration settings provided. This mapping is useful for handling requests directed to specific domains on the server.
+
+
+
+
+
+# HTTP SERVER
+
+Understanding an HTTP server involves grasping various concepts, from basic networking and the HTTP protocol to server architecture and security considerations
+
+### Basics of HTTP and Networking
+- HTTP (HyperText Transfer Protocol): The foundation of data communication on the web. It defines how messages are formatted and transmitted, and how web servers and browsers should respond to various commands.
+- TCP/IP (Transmission Control Protocol/Internet Protocol): The suite of communication protocols used to interconnect network devices on the internet. HTTP typically runs over TCP.
+- Client-Server Model: The basic architecture where a client (such as a web browser) sends requests to a server, which processes these requests and returns the appropriate responses.
+
+HTTP (HyperText Transfer Protocol) and TCP/IP (Transmission Control Protocol/Internet Protocol) are fundamental technologies that enable web communication. Understanding their relationship is crucial for grasping how data is transmitted over the internet. And this can be understood by talking about the Open Systems Interconnection model (OSI 7 Layer)
+
+### TCP/IP Model Layers
+1. Application Layer: This is called the top layer or layer 7 and it's the layer users interact with like web browsing, file transfers, mobile applications etc. This layer provides network services to the end user, the layer defines the rules of web communication, which encompasses how requests and responses are formatted and transmitted e.g HTTP
+2. The Presentation Layer: This layer performs the task of converting data from one format to the other. This layer is where tasks like decryption, encryption, data translating/formatting, data compression and other adjoining stuffs take place.
+3. The Session Layer: This is the layer of connections. This where connections are established, directed, authenticated and even terminated.
+4. Transport Layer: This layer helps in transmitting data in packets. It determines how much data is transmitted, how fast, destination etc. The most widely used protocol for transmission is TCP(Transmission Control Protocol) and UDP (User Datagram Protocol).
+5. Network Layer: This layer routes the data. Here we probe the data to determine if it has reached it's destination or not. Its able to determine this based on the IP portion of the TCP.
+6. Data Link Layer: Its subdivided to Media Access Control and Logical Link Control. This layer sets up links across physical layers
+7. Physical Layer: Handles the connection between devices. This layer includes transimission of data over physical stuffs like cables, switches and network interface cards.
+
+
+How HTTP Uses TCP/IP
+HTTP relies on the underlying TCP/IP protocols to function. Here’s a step-by-step breakdown of how an HTTP request and response are transmitted using TCP/IP:
+
+HTTP Request Creation:
+
+When a user requests a web page, the web browser (client) constructs an HTTP request message. This message includes the method (e.g., GET, POST, DELETE etc), the URL, headers, and possibly a body (for methods like POST).
+TCP Connection Establishment:
+
+The client initiates a TCP connection to the web server using the server’s IP address and the default HTTP port (usually port 80 for HTTP or port 443 for HTTPS).
+TCP performs a three-way handshake to establish a connection:
+SYN: The client sends a synchronization packet to the server.
+SYN-ACK: The server responds with a synchronization-acknowledgment packet.
+ACK: The client sends an acknowledgment packet back to the server.
+Data Transmission:
+
+Once the TCP connection is established, the HTTP request message is sent from the client to the server through this connection.
+TCP ensures the data is delivered reliably and in the correct order by dividing it into segments, sending them, and retransmitting any lost segments.
+IP Packet Routing:
+
+The TCP segments are encapsulated in IP packets. Each IP packet contains source and destination IP addresses.
+The IP protocol handles the routing of these packets across the internet, ensuring they reach the correct destination.
+HTTP Response:
+
+The web server processes the HTTP request and generates an HTTP response message, which includes the status code (e.g., 200 OK), headers, and the requested content (e.g., HTML, images).
+This HTTP response is sent back to the client using the same TCP connection.
+TCP Connection Termination:
+
+After the HTTP response is delivered, the TCP connection is closed using a four-way handshake:
+FIN: The client sends a finish packet to the server.
+ACK: The server acknowledges the finish packet.
+FIN: The server sends its own finish packet to the client.
+ACK: The client acknowledges the server’s finish packet.
+
+### Components of an HTTP Server
+Socket: An endpoint for sending or receiving data across a network. HTTP servers listen for requests on a specific IP address and port number.
+Request Handling: HTTP servers parse incoming requests, extract necessary information (method, path, headers, body), and route them to the appropriate handlers.
+Response Generation: After processing the request, the server generates a response that typically includes a status line, headers, and a body.
+
+
+### HTTP Protocol Details
+Methods: The most common HTTP methods include GET (retrieve data), POST (submit data), PUT (update data), DELETE (remove data), and others.
+Status Codes: Indicate the result of the HTTP request. Common status codes include:
+200 OK: The request was successful.
+404 Not Found: The requested resource was not found.
+500 Internal Server Error: A generic error message indicating a server-side problem.
+Headers: Key-value pairs in both requests and responses that convey additional information such as content type, content length, cookies, caching policies, etc.
+Body: The main data of the request or response. In a GET request, the body is usually empty, whereas in a POST request, it contains the data to be sent.
+
+
+### Server Architecture
+Single-threaded vs. Multi-threaded: Single-threaded servers handle one request at a time, while multi-threaded servers can handle multiple requests concurrently.
+Event-driven vs. Blocking I/O: Event-driven (non-blocking) I/O allows a server to handle many connections simultaneously without waiting for each one to complete, improving scalability.
+Load Balancing: Distributing incoming traffic across multiple servers to ensure no single server is overwhelmed, enhancing performance and reliability.
+Microservices Architecture: An approach where a server consists of multiple loosely coupled services that can be developed, deployed, and scaled independently.
+
+
+### Security Considerations
+SSL/TLS (Secure Sockets Layer/Transport Layer Security): Protocols for encrypting data between the client and server, ensuring data integrity and confidentiality.
+Authentication and Authorization: Mechanisms to verify the identity of users (authentication) and control their access to resources (authorization). Examples include OAuth, JWT, and session-based authentication.
+Rate Limiting: Preventing abuse by limiting the number of requests a client can make in a given time period.
+CORS (Cross-Origin Resource Sharing): A mechanism to control how resources on your server can be requested from another domain.
+
+
+### Common HTTP Server Software
+Apache HTTP Server: A widely used, open-source HTTP server known for its robustness and extensive feature set.
+Nginx: Known for its high performance and low resource consumption, commonly used as a reverse proxy and load balancer.
+Microsoft IIS (Internet Information Services): A flexible, secure, and manageable web server for hosting anything on the Web.
+Lighttpd: Designed for speed-critical environments, it’s secure, fast, and consumes less CPU and memory.
+
+### Monitoring and Logging
+Access Logs: Record details of every request made to the server.
+Error Logs: Record any errors encountered during request processing.
+Monitoring Tools: Use tools like Prometheus, Grafana, ELK Stack (Elasticsearch, Logstash, Kibana), or proprietary services to monitor performance, detect anomalies, and analyze trends.

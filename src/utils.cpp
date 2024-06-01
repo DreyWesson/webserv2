@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 23:16:54 by alappas           #+#    #+#             */
-/*   Updated: 2024/05/28 23:16:55 by alappas          ###   ########.fr       */
+/*   Updated: 2024/06/01 13:52:39 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,24 +234,54 @@ std::string get_http_date()
     return formatHttpDate(currentTime);
 }
 
-std::string generateETagForFile(File &file)
-{
-    std::stringstream ss;
+std::string extractFilename(const std::string& body) {
+    size_t filenamePos = body.find("filename=\"");
+    if (filenamePos != std::string::npos) {
+        filenamePos += 10;
 
-    if (file.is_file())
-    {
-        std::string lastModified = file.last_modified();
-
-        if (lastModified.empty() || lastModified == "Unknown")
-            return "";
-        std::stringstream convert(lastModified);
-        time_t modifiedTime;
-        convert >> modifiedTime;
-        ss << std::hex << modifiedTime;
-        return ss.str();
+        size_t closingQuotePos = body.find("\"", filenamePos);
+        if (closingQuotePos != std::string::npos) {
+            return body.substr(filenamePos, closingQuotePos - filenamePos);
+        }
     }
-
     return "";
+}
+
+std::string extractBoundary(const std::string& contentType) {
+    size_t boundaryPos = contentType.find("boundary=");
+    return (boundaryPos == std::string::npos) ? "" : contentType.substr(boundaryPos + 9);
+}
+
+bool containsBoundary(const std::string& input) {
+    return input.find("boundary") != std::string::npos;
+}
+
+std::string extractContent(const std::string& body, const std::string& boundary) {
+    std::string boundaryLine = "--" + boundary;
+    std::string endBoundaryLine = boundaryLine + "--";
+
+    size_t boundaryStart = body.find(boundaryLine);
+    if (boundaryStart == std::string::npos)
+        return "";
+
+    boundaryStart += boundaryLine.length() + 2;
+
+    size_t headerEnd = body.find("\r\n\r\n", boundaryStart);
+    if (headerEnd == std::string::npos)
+        return "";
+
+    headerEnd += 4;
+
+    size_t contentEnd = body.find(boundaryLine, headerEnd);
+    if (contentEnd == std::string::npos)
+        contentEnd = body.find(endBoundaryLine, headerEnd);
+
+    if (contentEnd == std::string::npos)
+        return "";
+
+    contentEnd -= 2;
+
+    return body.substr(headerEnd, contentEnd - headerEnd);
 }
 
 template <typename T>

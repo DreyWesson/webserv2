@@ -6,7 +6,7 @@
 /*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:43:16 by doduwole          #+#    #+#             */
-/*   Updated: 2024/06/01 10:43:19 by doduwole         ###   ########.fr       */
+/*   Updated: 2024/06/01 12:53:59 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ public:
   bool isCgi(std::string path);
   void setCgi(bool& val);
   bool get_Cgi();
-  void setSubstr(int start);
+  // void setSubstr(int start);
   std::string &getBody();
 
   void setMap(const VecStr &vec, std::map<int, std::string> &resultMap, std::string &codes);

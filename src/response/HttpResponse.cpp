@@ -6,7 +6,7 @@
 /*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:45:51 by doduwole          #+#    #+#             */
-/*   Updated: 2024/06/01 10:45:53 by doduwole         ###   ########.fr       */
+/*   Updated: 2024/06/01 12:53:46 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,15 +132,15 @@ void HttpResponse::cleanUp()
 }
 
 
-void HttpResponse::printMethodMap()
-{
-	std::map<std::string, int (HttpResponse::*)()>::iterator it;
+// void HttpResponse::printMethodMap()
+// {
+// 	std::map<std::string, int (HttpResponse::*)()>::iterator it;
 
-	for (it = methods_.begin(); it != methods_.end(); ++it)
-	{
-		std::cout << "Method: " << it->first << ", Function Pointer: " << it->second << std::endl;
-	}
-}
+// 	for (it = methods_.begin(); it != methods_.end(); ++it)
+// 	{
+// 		std::cout << "Method: " << it->first << ", Function Pointer: " << it->second << std::endl;
+// 	}
+// }
 
 void HttpResponse::initMethods()
 {
@@ -374,32 +374,32 @@ std::string HttpResponse::buildMethodList()
 	return list;
 }
 
-std::string HttpResponse::response_log(LogLevel level)
-{
-	std::string ret;
+// std::string HttpResponse::response_log(LogLevel level)
+// {
+// 	std::string ret;
 
-	if (level == INFO)
-	{
-		ret = "[status: " + ftos(status_code_) + " " + file_->getStatusCode(status_code_) + "]";
-		if (headers_.count("Content-Length"))
-			ret = ret + " [length: " + headers_["Content-Length"] + "]";
-	}
-	else if (level > INFO)
-	{
-		ret = "\n\n" + response_.substr(0, header_size_ - 4) + "\n";
-		if (body_size_)
-		{
-			if (body_size_ < 200)
-				ret = ret + "\n" + response_.substr(header_size_);
-			else
-				ret = ret + "\n" + response_.substr(header_size_, 200) + "...";
-		}
-	}
+// 	if (level == INFO)
+// 	{
+// 		ret = "[status: " + ftos(status_code_) + " " + file_->getStatusCode(status_code_) + "]";
+// 		if (headers_.count("Content-Length"))
+// 			ret = ret + " [length: " + headers_["Content-Length"] + "]";
+// 	}
+// 	else if (level > INFO)
+// 	{
+// 		ret = "\n\n" + response_.substr(0, header_size_ - 4) + "\n";
+// 		if (body_size_)
+// 		{
+// 			if (body_size_ < 200)
+// 				ret = ret + "\n" + response_.substr(header_size_);
+// 			else
+// 				ret = ret + "\n" + response_.substr(header_size_, 200) + "...";
+// 		}
+// 	}
 
-	std::cout << ret << std::endl;
+// 	std::cout << ret << std::endl;
 
-	return ret;
-}
+// 	return ret;
+// }
 
 bool HttpResponse::getRedirect()
 {
@@ -502,10 +502,10 @@ void HttpResponse::setHeader(std::string key, std::string value)
 	headers_[key] = value;
 }
 
-void HttpResponse::appendBody(char *buffer, int size)
-{
-	body_.append(buffer, size);
-}
+// void HttpResponse::appendBody(char *buffer, int size)
+// {
+// 	body_.append(buffer, size);
+// }
 
 std::string &HttpResponse::getBody()
 {
@@ -527,15 +527,15 @@ std::map<std::string, std::string> HttpResponse::getHeaders()
 	return headers_;
 }
 
-void HttpResponse::setSubstr(int start, std::size_t end)
-{
-	body_ = body_.substr(start, end);
-}
+// void HttpResponse::setSubstr(int start, std::size_t end)
+// {
+// 	body_ = body_.substr(start, end);
+// }
 
-void HttpResponse::setSubstr(int start)
-{
-	body_ = body_.substr(start);
-}
+// void HttpResponse::setSubstr(int start)
+// {
+// 	body_ = body_.substr(start);
+// }
 
 void HttpResponse::clearBody()
 {

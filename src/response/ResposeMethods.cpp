@@ -6,7 +6,7 @@
 /*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:25:18 by doduwole          #+#    #+#             */
-/*   Updated: 2024/06/01 11:41:18 by doduwole         ###   ########.fr       */
+/*   Updated: 2024/06/01 13:48:33 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,59 +46,6 @@ int HttpResponse::GET()
     pthread_mutex_unlock(&g_write);
 
     return 200;
-}
-
-std::string extractFilename(const std::string& body) {
-    size_t filenamePos = body.find("filename=\"");
-    if (filenamePos != std::string::npos) {
-        filenamePos += 10;
-
-        size_t closingQuotePos = body.find("\"", filenamePos);
-        if (closingQuotePos != std::string::npos) {
-            return body.substr(filenamePos, closingQuotePos - filenamePos);
-        }
-    }
-    return "";
-}
-
-std::string extractBoundary(const std::string& contentType) {
-    size_t boundaryPos = contentType.find("boundary=");
-    if (boundaryPos == std::string::npos) {
-        return "";
-    }
-    return contentType.substr(boundaryPos + 9);
-}
-
-bool containsBoundary(const std::string& input) {
-    return input.find("boundary") != std::string::npos;
-}
-
-std::string extractContent(const std::string& body, const std::string& boundary) {
-    std::string boundaryLine = "--" + boundary;
-    std::string endBoundaryLine = boundaryLine + "--";
-
-    size_t boundaryStart = body.find(boundaryLine);
-    if (boundaryStart == std::string::npos) {
-        return "";
-    }
-    boundaryStart += boundaryLine.length() + 2;
-
-    size_t headerEnd = body.find("\r\n\r\n", boundaryStart);
-    if (headerEnd == std::string::npos) {
-        return "";
-    }
-    headerEnd += 4;
-
-    size_t contentEnd = body.find(boundaryLine, headerEnd);
-    if (contentEnd == std::string::npos) {
-        contentEnd = body.find(endBoundaryLine, headerEnd);
-    }
-    if (contentEnd == std::string::npos) {
-        return "";
-    }
-    contentEnd -= 2;
-
-    return body.substr(headerEnd, contentEnd - headerEnd);
 }
 
 int HttpResponse::POST() {

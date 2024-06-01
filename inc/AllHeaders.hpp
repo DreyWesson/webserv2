@@ -6,7 +6,7 @@
 /*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:40:43 by doduwole          #+#    #+#             */
-/*   Updated: 2024/06/01 10:40:44 by doduwole         ###   ########.fr       */
+/*   Updated: 2024/06/01 13:53:33 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ std::string removeDupSlashes(std::string str);
 std::string formatHttpDate(time_t timeValue);
 std::string get_http_date();
 std::string md5(const std::string& input);
-std::string generateETagForFile(File& file);
+// std::string generateETagForFile(File& file);
 bool isMethodCharValid(char ch);
 bool isAlpha(char c);
 bool isDigit(char c);
@@ -103,6 +103,10 @@ bool isSubDelim(char c);
 bool isHexDigit(char c);
 std::string trim(const std::string& str);
 unsigned int hexToDecimal(const std::string& hex);
+std::string extractBoundary(const std::string& contentType);
+bool containsBoundary(const std::string& input);
+std::string extractContent(const std::string& body, const std::string& boundary);
+std::string extractFilename(const std::string& body);
 
 template<typename KeyType, typename ValueType>
 void printMap(const std::map<KeyType, ValueType> &m);
