@@ -17,7 +17,7 @@ HTTP (HyperText Transfer Protocol) and TCP/IP (Transmission Control Protocol/Int
 4. Transport Layer: This layer helps in transmitting data in packets. It determines how much data is transmitted, how fast, destination etc. The most widely used protocol for transmission is TCP(Transmission Control Protocol) and UDP (User Datagram Protocol).
 5. Network Layer: This layer routes the data. Here we probe the data to determine if it has reached it's destination or not. Its able to determine this based on the IP portion of the TCP.
 6. Data Link Layer: Its subdivided to Media Access Control and Logical Link Control. This layer sets up links across physical layers
-7. Physical Layer: Handles the connection between devices. This layer includes transimission of data over physical stuffs like cables, switches and network interface cards.
+7. Physical Layer: Handles the connection between devices. This layer includes transimission of data over physical stuffs like cables, switches, routers and network interface cards.
 
 
 How HTTP Uses TCP/IP
