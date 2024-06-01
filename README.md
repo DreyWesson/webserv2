@@ -175,6 +175,302 @@ Applications of TCP
 
 
 
+In C++, sockets are used to facilitate communication between computers over a network. Sockets provide an endpoint for sending and receiving data across the network using standard protocols like TCP and UDP. Sockets provide a way to establish a connection between two devices, allowing data to be exchanged..
+Key Concepts of Sockets
+
+    Socket: A socket is an endpoint for communication, defined by an IP address and a port number.
+    TCP (Transmission Control Protocol): A connection-oriented protocol ensuring reliable and ordered delivery of data.
+    UDP (User Datagram Protocol): A connectionless protocol, faster but less reliable than TCP.
+
+Socket Programming in C++
+
+Here’s a step-by-step guide to creating a simple TCP server and client in C++ using the Berkeley sockets API, which is available on Unix-like systems and Windows.
+TCP Server
+
+    Include Necessary Headers:
+        <iostream> for input/output.
+        <cstring> for memory operations.
+        <unistd.h> for POSIX operating system API.
+        <sys/types.h> and <sys/socket.h> for socket-related functions.
+        <netinet/in.h> for Internet address family.
+        <arpa/inet.h> for IP address conversion functions.
+
+    Create a Socket:
+
+    cpp
+
+int server_fd = socket(AF_INET, SOCK_STREAM, 0);
+if (server_fd == 0) {
+    std::cerr << "Socket creation failed\n";
+    return -1;
+}
+
+Bind the Socket to an IP/Port:
+
+cpp
+
+struct sockaddr_in address;
+int opt = 1;
+int addrlen = sizeof(address);
+
+// Forcefully attaching socket to the port 8080
+if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
+    std::cerr << "setsockopt failed\n";
+    close(server_fd);
+    return -1;
+}
+
+address.sin_family = AF_INET;
+address.sin_addr.s_addr = INADDR_ANY;
+address.sin_port = htons(8080);
+
+if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
+    std::cerr << "Bind failed\n";
+    close(server_fd);
+    return -1;
+}
+
+Listen for Connections:
+
+cpp
+
+if (listen(server_fd, 3) < 0) {
+    std::cerr << "Listen failed\n";
+    close(server_fd);
+    return -1;
+}
+
+Accept a Connection:
+
+cpp
+
+int new_socket;
+if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen)) < 0) {
+    std::cerr << "Accept failed\n";
+    close(server_fd);
+    return -1;
+}
+
+Read and Write Data:
+
+cpp
+
+char buffer[1024] = {0};
+read(new_socket, buffer, 1024);
+std::cout << "Message from client: " << buffer << std::endl;
+const char *hello = "Hello from server";
+send(new_socket, hello, strlen(hello), 0);
+std::cout << "Hello message sent\n";
+
+Close the Socket:
+
+cpp
+
+    close(new_socket);
+    close(server_fd);
+
+TCP Client
+
+    Include Necessary Headers (similar to the server).
+
+    Create a Socket:
+
+    cpp
+
+int sock = 0;
+if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+    std::cerr << "Socket creation error\n";
+    return -1;
+}
+
+Specify Server Address:
+
+cpp
+
+struct sockaddr_in serv_addr;
+serv_addr.sin_family = AF_INET;
+serv_addr.sin_port = htons(8080);
+
+// Convert IPv4 and IPv6 addresses from text to binary form
+if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0) {
+    std::cerr << "Invalid address/ Address not supported\n";
+    return -1;
+}
+
+Connect to the Server:
+
+cpp
+
+if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
+    std::cerr << "Connection failed\n";
+    return -1;
+}
+
+Read and Write Data:
+
+cpp
+
+const char *hello = "Hello from client";
+send(sock, hello, strlen(hello), 0);
+std::cout << "Hello message sent\n";
+
+char buffer[1024] = {0};
+read(sock, buffer, 1024);
+std::cout << "Message from server: " << buffer << std::endl;
+
+Close the Socket:
+
+cpp
+
+close(sock);
+
+
+
+
+
+The Relationship Between TCP and Sockets
+
+TCP (Transmission Control Protocol) and sockets are integral components of network communication. Here’s how they interact:
+
+    Sockets:
+        A socket is an endpoint for sending or receiving data across a computer network. It is an abstraction provided by the operating system to facilitate network communication.
+        Sockets provide a way to establish a connection between two devices, allowing data to be exchanged.
+
+    TCP:
+        TCP is a protocol that defines how to establish and maintain a reliable, ordered, and error-checked communication between two network devices.
+        TCP ensures that data is delivered accurately and in the same order in which it was sent.
+
+How TCP and Sockets Work Together
+1. Creating a Socket
+
+When you create a socket, you specify the type of communication you want:
+
+    Stream Sockets (SOCK_STREAM): These use TCP for communication. They provide a reliable, connection-oriented communication channel.
+    Datagram Sockets (SOCK_DGRAM): These use UDP for communication. They provide a connectionless communication channel.
+
+2. Binding and Listening (Server Side)
+
+For a server using TCP:
+
+    Bind: The server binds the socket to a specific IP address and port number, making it available to clients.
+    Listen: The server puts the socket into listening mode, waiting for client connection requests.
+
+3. Connecting (Client Side)
+
+For a client using TCP:
+
+    Connect: The client creates a socket and connects it to the server’s IP address and port number.
+
+4. Establishing a Connection
+
+This is where TCP’s reliability features come into play:
+
+    Three-Way Handshake: TCP establishes a connection using a three-step process:
+        SYN: The client sends a synchronization packet (SYN) to the server.
+        SYN-ACK: The server responds with a synchronization-acknowledgment packet (SYN-ACK).
+        ACK: The client sends an acknowledgment packet (ACK) back to the server.
+
+This handshake process ensures both the client and server are ready for communication and agree on initial parameters such as sequence numbers.
+5. Data Transfer
+
+    Send/Receive: Once the connection is established, data can be sent using send() or write() and received using recv() or read().
+    TCP’s Role: TCP handles the segmentation of data into packets, ensures each packet is delivered correctly, manages retransmissions if packets are lost, and reassembles the packets in the correct order at the receiving end.
+
+6. Connection Termination
+
+When the communication is complete, the connection is terminated gracefully using a four-step process:
+
+    FIN: One side (client or server) sends a finish (FIN) packet to signal the end of data transmission.
+    ACK: The other side acknowledges with an acknowledgment (ACK) packet.
+    FIN: The other side then sends its own FIN packet.
+    ACK: Finally, the initial side acknowledges with an ACK packet, closing the connection.
+
+    ```
+    	# SERVER CODE
+	#include <iostream>
+	#include <cstring>
+	#include <unistd.h>
+	#include <arpa/inet.h>
+	
+	int main() {
+	    int server_fd = socket(AF_INET, SOCK_STREAM, 0);
+	    if (server_fd == 0) {
+	        std::cerr << "Socket creation failed\n";
+	        return -1;
+	    }
+	
+	    struct sockaddr_in address;
+	    int opt = 1;
+	    int addrlen = sizeof(address);
+	
+	    setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt));
+	
+	    address.sin_family = AF_INET;
+	    address.sin_addr.s_addr = INADDR_ANY;
+	    address.sin_port = htons(8080);
+	
+	    bind(server_fd, (struct sockaddr *)&address, sizeof(address));
+	    listen(server_fd, 3);
+	
+	    int new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen);
+	    char buffer[1024] = {0};
+	    read(new_socket, buffer, 1024);
+	    std::cout << "Message from client: " << buffer << std::endl;
+	
+	    const char *hello = "Hello from server";
+	    send(new_socket, hello, strlen(hello), 0);
+	
+	    close(new_socket);
+	    close(server_fd);
+	
+	    return 0;
+	}
+
+	# CLIENT CODE
+	#include <iostream>
+	#include <cstring>
+	#include <unistd.h>
+	#include <arpa/inet.h>
+	
+	int main() {
+	    int sock = 0;
+	    struct sockaddr_in serv_addr;
+	
+	    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+	        std::cerr << "Socket creation error\n";
+	        return -1;
+	    }
+	
+	    serv_addr.sin_family = AF_INET;
+	    serv_addr.sin_port = htons(8080);
+	
+	    if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0) {
+	        std::cerr << "Invalid address\n";
+	        return -1;
+	    }
+	
+	    if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
+	        std::cerr << "Connection failed\n";
+	        return -1;
+	    }
+	
+	    const char *hello = "Hello from client";
+	    send(sock, hello, strlen(hello), 0);
+	    
+	    char buffer[1024] = {0};
+	    read(sock, buffer, 1024);
+	    std::cout << "Message from server: " << buffer << std::endl;
+	
+	    close(sock);
+	
+	    return 0;
+	}
+
+```
+
+
+
+
 
 
 ### Simplified Explanation of Epoll API
