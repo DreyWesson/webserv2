@@ -6,7 +6,7 @@
 /*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:25:18 by doduwole          #+#    #+#             */
-/*   Updated: 2024/06/01 10:39:32 by doduwole         ###   ########.fr       */
+/*   Updated: 2024/06/01 11:41:18 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,17 +127,25 @@ int HttpResponse::POST() {
                 status_code = 400;
             }
         } else {
-            std::cerr << "Invalid content type or boundary not found" << std::endl;
-            status_code = 415;
+            std::string ext = mimeTypes.getType(boundary);
+            if (ext.empty()) {
+                std::cerr << "Invalid content type" << std::endl;
+                status_code = 415;
+            } else {
+                std::string default_name = "default" + ext;
+                std::string x_filename = config_.getHeader("X-Filename");
+                x_filename = x_filename.empty() ? default_name : x_filename;
+                file_->appendFile(body_, x_filename);
+                status_code = 201;
+            }
         }
     }
-    pthread_mutex_unlock(&g_write);
 
+    pthread_mutex_unlock(&g_write);
     headers_["Content-Length"] = ftos(body_.length());
 
-    if (!file_->getFilePath().empty()) {
+    if (!file_->getFilePath().empty())
         headers_["Location"] = file_->getFilePath();
-    }
 
     return status_code;
 }
