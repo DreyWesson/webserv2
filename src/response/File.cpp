@@ -6,7 +6,7 @@
 /*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:45:41 by doduwole          #+#    #+#             */
-/*   Updated: 2024/06/01 15:20:56 by doduwole         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:36:21 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,12 +216,19 @@ void File::appendFile(const std::string &body,std::string x_filename)
 
 bool File::deleteFile()
 {
-    if (unlink(path_.c_str()) != 0)
-    {
-        std::cerr << "Error deleting file: " << strerror(errno) << std::endl;
-        return false;
+    if (is_directory()) {
+        if (rmdir(path_.c_str()) != 0) {
+            std::cerr << "Error deleting directory: " << strerror(errno) << std::endl;
+            return false;
+        }
+        std::cout << "Directory deleted: " << path_ << std::endl;
+    } else {
+        if (unlink(path_.c_str()) != 0) {
+            std::cerr << "Error deleting file: " << strerror(errno) << std::endl;
+            return false;
+        }
+        std::cout << "File deleted: " << path_ << std::endl;
     }
-    std::cout << "File deleted: " << path_ << std::endl;
     return true;
 }
 
